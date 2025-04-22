@@ -58,19 +58,28 @@
 
     <Button
         android:id="@+id/buttonexportarapdf"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="Exportar a PDF"
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/light_red"/>
+        android:backgroundTint="@color/light_red"
+        android:text="Exportar a PDF" />
 
     <Button
         android:id="@+id/buttonexportaracsv"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:text="Exportar a CSV"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/green"
+        android:text="Exportar a CSV" />
+
+    <Button
+        android:id="@+id/buttonvolvercarreras"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/green"/>
+        android:backgroundTint="@color/grey"
+        android:text="Volver a Carreras" />
 </FrameLayout>

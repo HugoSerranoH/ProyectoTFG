@@ -11,10 +11,10 @@
         android:id="@+id/textViewArribaParticipantes"
         android:layout_width="411dp"
         android:layout_height="47dp"
-        android:layout_marginEnd="2dp"
         android:gravity="center"
         android:text="Añadir Participante a Carrera"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.fragment.app.FragmentContainerView
@@ -76,7 +76,7 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerViewParticipantesanadidos"
         android:name="com.example.proyectotfg.ListaParticipantes"
-        android:layout_width="407dp"
+        android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="13dp"

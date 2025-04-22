@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoTFG"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Creditos"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="true">
@@ -24,30 +26,20 @@
         </activity>
         <activity
             android:name=".RegistrarUsuario"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ConsultaCarrera"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
-
-        </activity>
-
+            android:windowSoftInputMode="adjustPan"></activity>
         <activity
             android:name=".AnadirUsuario"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".SeleccionarCarrera"
             android:exported="false" />
         <activity
             android:name=".EligeModo"
-            android:exported="true">
-
-        </activity>
-
+            android:exported="true"></activity>
     </application>
 
 </manifest>

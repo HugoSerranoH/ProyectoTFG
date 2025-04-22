@@ -24,10 +24,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="132dp"
         android:layout_marginTop="64dp"
         android:text="OPCIONES CARRERAS"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewElegidoDeporte" />
 
@@ -35,10 +35,10 @@
         android:id="@+id/buttonCrearCarrera"
         android:layout_width="283dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/light_green"
         android:text="Crear carrera"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -78,10 +78,10 @@
         android:id="@+id/buttonCrearDeportista"
         android:layout_width="283dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/light_green"
         android:text="Crear deportista"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
