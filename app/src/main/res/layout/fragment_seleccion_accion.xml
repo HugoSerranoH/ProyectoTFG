@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SeleccionAccionFragment">
+
+
+    <TextView
+        android:id="@+id/textViewElegidoDeporte"
+        android:layout_width="326dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="37dp"
+        android:gravity="center"
+        android:text="Has elegido: nombre_deporte"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="132dp"
+        android:layout_marginTop="64dp"
+        android:text="OPCIONES CARRERAS"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewElegidoDeporte" />
+
+    <Button
+        android:id="@+id/buttonCrearCarrera"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/light_green"
+        android:text="Crear carrera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <Button
+        android:id="@+id/buttonBorrarCarrera"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/light_red"
+        android:text="Borrar carrera"
+        app:layout_constraintStart_toStartOf="@+id/buttonCrearCarrera"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCrearCarrera" />
+
+
+    <Button
+        android:id="@+id/buttonModificar"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/brown"
+        android:text="Modificar/Ver"
+        app:layout_constraintStart_toStartOf="@+id/buttonBorrarCarrera"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBorrarCarrera" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="44dp"
+        android:text="OPCIONES DEPORTISTAS"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/buttonModificar"
+        app:layout_constraintTop_toBottomOf="@+id/buttonModificar" />
+
+    <Button
+        android:id="@+id/buttonCrearDeportista"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/light_green"
+        android:text="Crear deportista"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/buttonBorrarDeportista"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/light_red"
+        android:text="Borrar deportista"
+        app:layout_constraintStart_toStartOf="@+id/buttonCrearDeportista"
+        app:layout_constraintTop_toBottomOf="@+id/buttonCrearDeportista" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

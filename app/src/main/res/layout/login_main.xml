@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Login">
+
+    <TextView
+        android:id="@+id/logintexview"
+        android:layout_width="248dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="LOGIN"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/UsuariotextView"
+        android:layout_width="125dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="212dp"
+        android:text="USUARIO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"/>
+
+
+    <EditText
+        android:id="@+id/UsuarioeditTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:hint="Introduce tu usuario"
+        android:inputType="text"
+        app:layout_constraintStart_toStartOf="@+id/UsuariotextView"
+        app:layout_constraintTop_toBottomOf="@+id/UsuariotextView" />
+
+    <TextView
+        android:id="@+id/ContraseñatextView"
+        android:layout_width="127dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="31dp"
+        android:text="CONTRASEÑA"
+        app:layout_constraintStart_toStartOf="@+id/UsuarioeditTextText"
+        app:layout_constraintTop_toBottomOf="@+id/UsuarioeditTextText"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/ContraseñaeditTextText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:hint="Introduce tu contraseña"
+        android:inputType="textPassword"
+        app:layout_constraintStart_toStartOf="@+id/ContraseñatextView"
+        app:layout_constraintTop_toBottomOf="@+id/ContraseñatextView" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:backgroundTint="@color/green"
+        android:text="Iniciar Sesión"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewRegistrate"
+        android:layout_width="263dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="33dp"
+        android:gravity="center"
+        android:text="Registrate aquí"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <TextView
+        android:id="@+id/textViewCreditos"
+        android:layout_width="61dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Creditos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="267dp"
+        android:layout_height="181dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginBottom="36dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/logotfg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
