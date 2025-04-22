@@ -1,5 +1,6 @@
 package com.example.proyectotfg
 
+import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -14,6 +16,7 @@ import androidx.fragment.app.Fragment
 class VerResultados : Fragment() {
     private lateinit var listViewVerResultados: ListView
     private lateinit var dbHelper: BaseDatosEjemplo
+    private lateinit var buttonvolver: Button
     private var idCarrera: Int = -1
     private var listaResultados = mutableListOf<String>()
 
@@ -21,13 +24,37 @@ class VerResultados : Fragment() {
         val view = inflater.inflate(R.layout.fragment_ver_resultados, container, false)
 
         listViewVerResultados = view.findViewById(R.id.ListViewVerResultados)
+        buttonvolver = view.findViewById(R.id.buttonvolvercarreras)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
 
         idCarrera = requireActivity().intent.getIntExtra("id_carrera", -1)
 
-
         Log.i("DEBUG", "VerResultados: ID de carrera recibido -> $idCarrera")
+
+        buttonvolver.setOnClickListener {
+            val db = dbHelper.readableDatabase
+            val cursordeportever: Cursor = db.rawQuery("SELECT id_deporte FROM carreras WHERE id = ?", arrayOf(idCarrera.toString()))
+
+            var idDeporte: Int? = null
+            if (cursordeportever.moveToFirst()) {
+                idDeporte = cursordeportever.getInt(0)
+//                Log.i("DEBUG", "idDeporte obtenido -> $idDeporte")
+            } else {
+//                Log.e("ERROR", "No se encontró idDeporte para la carrera con ID -> $idCarrera")
+            }
+            cursordeportever.close()
+
+
+            if (idDeporte != null) {
+                val intent = Intent(requireActivity(), SeleccionarCarrera::class.java)
+                intent.putExtra("id_deporte", idDeporte)
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "Error: No se pudo obtener el deporte asociado", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         if (idCarrera == -1) {
             Toast.makeText(requireContext(), "Error: No se recibió un ID de carrera válido", Toast.LENGTH_SHORT).show()

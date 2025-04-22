@@ -21,17 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/UsuariotextView"
         android:layout_width="125dp"
         android:layout_height="18dp"
-        android:layout_marginStart="48dp"
         android:layout_marginTop="212dp"
         android:text="USUARIO"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.339"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:textStyle="bold"/>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/UsuarioeditTextText"
@@ -81,7 +82,7 @@
         android:id="@+id/textViewRegistrate"
         android:layout_width="263dp"
         android:layout_height="17dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Registrate aquí"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,21 +91,23 @@
 
     <TextView
         android:id="@+id/textViewCreditos"
-        android:layout_width="61dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
+        android:layout_width="184dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="16dp"
-        android:text="Creditos"
+        android:gravity="center"
+        android:text="Información de la app"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.986"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="267dp"
         android:layout_height="181dp"
-        android:layout_marginStart="72dp"
         android:layout_marginBottom="36dp"
         app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/logotfg" />
 

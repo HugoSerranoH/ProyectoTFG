@@ -66,6 +66,7 @@ class Login : AppCompatActivity() {
         val contraseñaEditText = findViewById<EditText>(R.id.ContraseñaeditTextText2)
         val loginButton = findViewById<Button>(R.id.button)
         val registrateTextView = findViewById<TextView>(R.id.textViewRegistrate)
+        val informacionTextView = findViewById<TextView>(R.id.textViewCreditos)
 
 
         registrateTextView.setOnClickListener {
@@ -103,6 +104,9 @@ class Login : AppCompatActivity() {
                 // dbw.execSQL(sqlprueba)
                 // dbw.execSQL(deleteprueba)
             }
+        }
+        informacionTextView.setOnClickListener{
+            startActivity(Intent(this, Creditos::class.java))
         }
     }
 
