@@ -13,55 +13,56 @@
         android:layout_width="85dp"
         android:layout_height="63dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/imageButtonAtletismo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2"
         tools:srcCompat="@drawable/bicycle_icon" />
 
     <ImageButton
-        android:scaleType="centerInside"
         android:id="@+id/imageButtonAtletismo"
         android:layout_width="84dp"
         android:layout_height="68dp"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2"
         tools:srcCompat="@drawable/sprint_icon" />
 
     <TextView
         android:id="@+id/textViewDeporte_usuario"
         android:layout_width="385dp"
         android:layout_height="54dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Elige el deporte , nombre_usuario "
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageButton
         android:id="@+id/imageButtonKarts"
         android:layout_width="89dp"
         android:layout_height="66dp"
-        android:layout_marginStart="288dp"
-        android:layout_marginTop="128dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonAtletismo"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2"
         tools:srcCompat="@drawable/forklift_icon" />
-
-
 
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDeporte_usuario" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentAccion"

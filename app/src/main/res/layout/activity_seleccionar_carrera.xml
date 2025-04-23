@@ -25,16 +25,29 @@
         android:gravity="center"
         android:text="SELECCIONA LA CARRERA"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/buttontablaexterna"
-        android:layout_marginTop="20dp"
-        android:layout_width="361dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="88dp"
+        android:layout_width="255dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="60dp"
         android:text="Seleccionar una tabla externa"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/buttonElegirDeporte"
+        android:layout_width="125dp"
+        android:layout_height="69dp"
+        android:layout_marginBottom="36dp"
+        android:text="Elegir Deporte"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/grey"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
