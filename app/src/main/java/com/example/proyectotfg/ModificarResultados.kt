@@ -19,6 +19,7 @@ class ModificarResultados : Fragment() {
     private var idCarrera: Int = -1
     private var corredoresDisponibles = listOf<Pair<Int, String>>()
     private var corredoresTiempos = mutableMapOf<Int, String>()
+    private val corredoresOrdenados = mutableListOf<Int?>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_modificar_resultados, container, false)
@@ -52,6 +53,29 @@ class ModificarResultados : Fragment() {
                 val spinner = Spinner(context)
                 val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, corredoresDisponibles.map { it.second })
                 spinner.adapter = spinnerAdapter
+                spinner.setTag(position)
+
+
+                // Al seleccionar un corredor en el Spinner, se añade su id en la lista de manera ordenada
+                spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>, view: View?, positionSpinner: Int, id: Long) {
+                        // Obtienes el indice en el que se encuentra
+                        val index = spinner.getTag() as Int
+                        val idCorredorSeleccionado = corredoresDisponibles[positionSpinner].first
+
+
+                        if (index >= corredoresOrdenados.size) {
+                            corredoresOrdenados.add(idCorredorSeleccionado)
+                        } else {
+                            corredoresOrdenados[index] = idCorredorSeleccionado
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+
+                    }
+                }
+
 
                 val editTextTiempo = EditText(context)
                 editTextTiempo.hint = "Tiempo (hh:mm:ss)"
@@ -158,13 +182,12 @@ class ModificarResultados : Fragment() {
         db.execSQL("DELETE FROM resultados_carrera WHERE id_participante_carrera IN (SELECT id FROM participante_carrera WHERE id_carrera = ?)", arrayOf(idCarrera.toString()))
 
         listaPosiciones.forEachIndexed { index, resultado ->
-            val idCorredor = resultado.substringBefore(" - ").trim().toIntOrNull()
+            val idCorredor = corredoresOrdenados.getOrNull(index) // Obtenemos el ID del corredor según el orden en la lista
+            val tiempo = corredoresTiempos[index] ?: "00:00:00"
 
             Log.i("DEBUG", "Procesando posición $index -> Resultado: $resultado")
 
             if (idCorredor != null) {
-                val tiempo = corredoresTiempos[index] ?: "00:00:00"
-
                 Log.i("DEBUG", "Preparando INSERT: ID Corredor $idCorredor, Posición ${index + 1}, Tiempo $tiempo")
 
                 db.execSQL("INSERT INTO resultados_carrera (id_participante_carrera, posicion, tiempo) VALUES (?, ?, ?)",
@@ -175,7 +198,9 @@ class ModificarResultados : Fragment() {
                 Log.e("ERROR", "No se pudo extraer un ID válido de la lista de posiciones en el índice $index")
             }
         }
-        // SELECT PARA COMPROBAR ANTES DE CREAR VER CARRERA
+
+
+    // SELECT PARA COMPROBAR ANTES DE CREAR VER CARRERA
 //        val cursor = db.rawQuery(
 //            "SELECT id_participante_carrera, posicion, tiempo FROM resultados_carrera WHERE id_participante_carrera IN (SELECT id FROM participante_carrera WHERE id_carrera = ?)",
 //            arrayOf(idCarrera.toString())
@@ -194,6 +219,7 @@ class ModificarResultados : Fragment() {
 //        }
 //
 //        cursor.close()
+
         Toast.makeText(requireContext(), "Resultados actualizados correctamente", Toast.LENGTH_SHORT).show()
     }
 }
