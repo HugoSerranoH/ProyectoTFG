@@ -18,7 +18,7 @@ class BorrarDeportista : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_borrar_deportista, container, false)
 
-        buttonEliminar = view.findViewById(R.id.buttonModificarDeportista)
+        buttonEliminar = view.findViewById(R.id.buttonEliminarDeportista)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
         buttonEliminar.setOnClickListener {
