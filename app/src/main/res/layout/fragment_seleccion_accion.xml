@@ -78,7 +78,7 @@
         android:id="@+id/buttonCrearDeportista"
         android:layout_width="283dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/light_green"
         android:text="Crear deportista"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,5 +94,16 @@
         android:text="Borrar deportista"
         app:layout_constraintStart_toStartOf="@+id/buttonCrearDeportista"
         app:layout_constraintTop_toBottomOf="@+id/buttonCrearDeportista" />
+
+
+    <Button
+        android:id="@+id/buttonModificarDeportista"
+        android:layout_width="283dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/brown"
+        android:text="Modificar/Ver Deportista"
+        app:layout_constraintStart_toStartOf="@+id/buttonBorrarDeportista"
+        app:layout_constraintTop_toBottomOf="@+id/buttonBorrarDeportista" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

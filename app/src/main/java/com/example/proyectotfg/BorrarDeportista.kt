@@ -1,11 +1,9 @@
 package com.example.proyectotfg
 
 import android.app.AlertDialog
-import android.database.Cursor
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +18,7 @@ class BorrarDeportista : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_borrar_deportista, container, false)
 
-        buttonEliminar = view.findViewById(R.id.buttonEliminarCarrera)
+        buttonEliminar = view.findViewById(R.id.buttonModificarDeportista)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
         buttonEliminar.setOnClickListener {

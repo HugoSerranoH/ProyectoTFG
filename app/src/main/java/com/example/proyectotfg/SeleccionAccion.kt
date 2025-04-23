@@ -32,6 +32,7 @@ class SeleccionAccionFragment : Fragment() {
         val botonBorrarCarrera = view.findViewById<Button>(R.id.buttonBorrarCarrera)
         val botonmodificarver = view.findViewById<Button>(R.id.buttonModificar)
         val botonBorrarDeportista = view.findViewById<Button>(R.id.buttonBorrarDeportista)
+        val botonModificarDeportista = view.findViewById<Button>(R.id.buttonModificarDeportista)
 
         textViewElegido.text = "Has seleccionado como deporte: $nombreDeporte"
 
@@ -46,6 +47,15 @@ class SeleccionAccionFragment : Fragment() {
 
         botonBorrarDeportista.setOnClickListener {
             val fragment = BorrarDeportista().apply {
+                arguments = Bundle().apply {
+                    putInt("id_deporte", userViewModel.deporteSeleccionado.value?.first ?: -1)
+                }
+            }
+            cambiarFragment(fragment)
+        }
+
+        botonModificarDeportista.setOnClickListener {
+            val fragment = ModificarDeportista().apply {
                 arguments = Bundle().apply {
                     putInt("id_deporte", userViewModel.deporteSeleccionado.value?.first ?: -1)
                 }

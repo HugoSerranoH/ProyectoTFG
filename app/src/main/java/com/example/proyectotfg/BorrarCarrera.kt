@@ -13,7 +13,7 @@ class BorrarCarrera : Fragment() {
     private lateinit var dbHelper: BaseDatosEjemplo
     private lateinit var spinnerCarreras: Spinner
     private lateinit var buttonEliminarCarrera: Button
-    private var listaCarreras = mutableListOf<Pair<Int, String>>() // Lista de carreras (ID, Nombre)
+    private var listaCarreras = mutableListOf<Pair<Int, String>>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

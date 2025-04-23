@@ -182,7 +182,7 @@ class ModificarResultados : Fragment() {
         db.execSQL("DELETE FROM resultados_carrera WHERE id_participante_carrera IN (SELECT id FROM participante_carrera WHERE id_carrera = ?)", arrayOf(idCarrera.toString()))
 
         listaPosiciones.forEachIndexed { index, resultado ->
-            val idCorredor = corredoresOrdenados.getOrNull(index) // Obtenemos el ID del corredor según el orden en la lista
+            val idCorredor = corredoresOrdenados.getOrNull(index)
             val tiempo = corredoresTiempos[index] ?: "00:00:00"
 
             Log.i("DEBUG", "Procesando posición $index -> Resultado: $resultado")
