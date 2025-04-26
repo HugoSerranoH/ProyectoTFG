@@ -89,7 +89,7 @@ class ModificarDeportista : Fragment() {
         input.hint = "Introduce nuevo $campo"
 
         AlertDialog.Builder(requireContext())
-            .setTitle("Editar $campo del usuario")
+            .setTitle("Editar $campo del deportista")
             .setView(input)
             .setPositiveButton("Guardar") { _, _ ->
                 val nuevoValor = input.text.toString()

@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VerResultados">
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -52,34 +58,48 @@
 
     <ListView
         android:id="@+id/ListViewVerResultados"
-        android:layout_width="match_parent"
-        android:layout_height="803dp"
-        android:layout_marginTop="25dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonexportaracsv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_marginBottom="5dp"/>
 
     <Button
         android:id="@+id/buttonexportarapdf"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/light_red"
-        android:text="Exportar a PDF" />
+        android:text="Exportar a PDF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/buttonexportaracsv"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/green"
-        android:text="Exportar a CSV" />
+        android:text="Exportar a CSV"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonexportarapdf"
+        app:layout_constraintStart_toEndOf="@+id/buttonvolvercarreras" />
 
     <Button
         android:id="@+id/buttonvolvercarreras"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/grey"
-        android:text="Volver a Carreras" />
-</FrameLayout>
+        android:text="Volver a Carreras"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
