@@ -64,7 +64,7 @@ class ListaParticipantes : Fragment() {
 
         Log.i("DEBUG", "ListaParticipantes: Cargando participantes de la carrera ID=$idCarrera")
 
-        val cursor: Cursor = db.rawQuery("""
+        val cursorparticipantes: Cursor = db.rawQuery("""
             SELECT corredores.nombre,participante_carrera.dorsal
             FROM participante_carrera
             JOIN corredores ON participante_carrera.id_participante = corredores.id
@@ -72,12 +72,12 @@ class ListaParticipantes : Fragment() {
             order by participante_carrera.dorsal asc
         """, arrayOf(idCarrera.toString()))
 
-        if (cursor.moveToFirst()) {
+        if (cursorparticipantes.moveToFirst()) {
             do {
-                listaParticipantes.add("${cursor.getString(0)},  NºD: ${cursor.getInt(1)}")
-            } while (cursor.moveToNext())
+                listaParticipantes.add("${cursorparticipantes.getString(0)},  NºD: ${cursorparticipantes.getInt(1)}")
+            } while (cursorparticipantes.moveToNext())
         }
-        cursor.close()
+        cursorparticipantes.close()
         listaParticipantesFiltrados.clear()
         listaParticipantesFiltrados.addAll(listaParticipantes)
         adapter.notifyDataSetChanged()

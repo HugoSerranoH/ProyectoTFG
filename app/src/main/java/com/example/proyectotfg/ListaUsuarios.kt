@@ -24,11 +24,7 @@ class ListaUsuarios : Fragment() {
     private var idDeporte: Int = -1
     private lateinit var userViewModel: UserViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_lista_usuarios, container, false)
 
         listViewUsuarios = view.findViewById(R.id.listViewUsuarios)
@@ -46,7 +42,7 @@ class ListaUsuarios : Fragment() {
             deporte?.let { (id, nombre) ->
                 idDeporte = id
                 Log.i("DEBUG", "ListaUsuarios: Obtenido ID de deporte -> $id, Nombre -> $nombre")
-                cargarUsuarios() // Llamamos a cargarUsuarios solo cuando idDeporte es válido
+                cargarUsuarios()
             }
         }
 
@@ -131,7 +127,7 @@ class ListaUsuarios : Fragment() {
             .show()
     }
     fun obtenerUsuarioSeleccionado(): String? {
-        Log.i("DEBUG", "Intentando obtener usuario seleccionado -> $usuarioSeleccionado") // 🔥 Verificar
+        Log.i("DEBUG", "Intentando obtener usuario seleccionado -> $usuarioSeleccionado")
         return usuarioSeleccionado
     }
 }

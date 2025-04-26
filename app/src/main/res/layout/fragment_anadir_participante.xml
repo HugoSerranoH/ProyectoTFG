@@ -19,7 +19,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerViewTodosUsuarios"
-        android:name="com.example.proyectotfg.ListaUsuarios"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
@@ -63,7 +62,6 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerViewParticipantesanadidos"
-        android:name="com.example.proyectotfg.ListaParticipantes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
