@@ -8,7 +8,41 @@
     tools:context=".EligeModo">
 
 
-    <ImageButton
+    <TextView
+        android:id="@+id/textViewDeporte_usuario"
+        android:layout_width="385dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Elige el deporte , nombre_usuario "
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDeporte_usuario" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentAccion"
+        android:name="com.example.proyectotfg.SeleccionAccionFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+
+
+ <!--   <ImageButton
         android:id="@+id/imageButtonCiclismo"
         android:layout_width="85dp"
         android:layout_height="63dp"
@@ -29,21 +63,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner2"
         tools:srcCompat="@drawable/sprint_icon" />
-
-    <TextView
-        android:id="@+id/textViewDeporte_usuario"
-        android:layout_width="385dp"
-        android:layout_height="54dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:text="Elige el deporte , nombre_usuario "
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
     <ImageButton
         android:id="@+id/imageButtonKarts"
         android:layout_width="89dp"
@@ -53,25 +72,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButtonAtletismo"
         app:layout_constraintTop_toBottomOf="@+id/spinner2"
-        tools:srcCompat="@drawable/forklift_icon" />
-
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeporte_usuario" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentAccion"
-        android:name="com.example.proyectotfg.SeleccionAccionFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageButtonAtletismo" />
+        tools:srcCompat="@drawable/forklift_icon" /> -->
 </androidx.constraintlayout.widget.ConstraintLayout>

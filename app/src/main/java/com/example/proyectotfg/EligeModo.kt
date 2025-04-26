@@ -96,25 +96,25 @@ class EligeModo : AppCompatActivity() {
 
 
 
-        // Configuración de los botones
-        val imageButtonCiclismo: ImageButton = findViewById(R.id.imageButtonCiclismo)
-        val imageButtonAtletismo: ImageButton = findViewById(R.id.imageButtonAtletismo)
-        val imageButtonKarts: ImageButton = findViewById(R.id.imageButtonKarts)
-
-        imageButtonCiclismo.setOnClickListener {
-            Log.i("DEBUG", "Botón Ciclismo pulsado")
-            userViewModel.setDeporteSeleccionado(1, "Ciclismo")
-        }
-
-        imageButtonAtletismo.setOnClickListener {
-            Log.i("DEBUG", "Botón Atletismo pulsado")
-            userViewModel.setDeporteSeleccionado(2, "Atletismo")
-        }
-
-        imageButtonKarts.setOnClickListener {
-            Log.i("DEBUG", "Botón Karts pulsado")
-            userViewModel.setDeporteSeleccionado(3, "Karts")
-        }
+//        // Configuración de los botones
+//        val imageButtonCiclismo: ImageButton = findViewById(R.id.imageButtonCiclismo)
+//        val imageButtonAtletismo: ImageButton = findViewById(R.id.imageButtonAtletismo)
+//        val imageButtonKarts: ImageButton = findViewById(R.id.imageButtonKarts)
+//
+//        imageButtonCiclismo.setOnClickListener {
+//            Log.i("DEBUG", "Botón Ciclismo pulsado")
+//            userViewModel.setDeporteSeleccionado(1, "Ciclismo")
+//        }
+//
+//        imageButtonAtletismo.setOnClickListener {
+//            Log.i("DEBUG", "Botón Atletismo pulsado")
+//            userViewModel.setDeporteSeleccionado(2, "Atletismo")
+//        }
+//
+//        imageButtonKarts.setOnClickListener {
+//            Log.i("DEBUG", "Botón Karts pulsado")
+//            userViewModel.setDeporteSeleccionado(3, "Karts")
+//        }
 
         // Cargar el Fragment inicial
         supportFragmentManager.beginTransaction()

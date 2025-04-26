@@ -53,35 +53,49 @@ class ModificarResultados : Fragment() {
                 val spinner = Spinner(context)
                 val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, corredoresDisponibles.map { it.second })
                 spinner.adapter = spinnerAdapter
-                spinner.setTag(position)
 
+                val idCorredorSeleccionado = corredoresOrdenados.getOrNull(position)
+                if (idCorredorSeleccionado != null) {
+                    val index = corredoresDisponibles.indexOfFirst { it.first == idCorredorSeleccionado }
+                    if (index >= 0) spinner.setSelection(index)
+                }
 
                 // Al seleccionar un corredor en el Spinner, se añade su id en la lista de manera ordenada
                 spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>, view: View?, positionSpinner: Int, id: Long) {
-                        // Obtienes el indice en el que se encuentra
-                        val index = spinner.getTag() as Int
                         val idCorredorSeleccionado = corredoresDisponibles[positionSpinner].first
 
+                        if (idCorredorSeleccionado == -1) {
+                            return
+                        }
 
-                        if (index >= corredoresOrdenados.size) {
+                        if (idCorredorSeleccionado in corredoresOrdenados && corredoresOrdenados.indexOf(idCorredorSeleccionado) != position) {
+                            Toast.makeText(context, "Este corredor ya está en el resultado", Toast.LENGTH_LONG).show()
+                            val indiceAnterior = corredoresDisponibles.indexOfFirst { it.first == corredoresOrdenados.getOrNull(position) }
+                            if (indiceAnterior >= 0) {
+                                spinner.setSelection(indiceAnterior)
+                            }
+                            return
+                        }
+                        if (position >= corredoresOrdenados.size) {
                             corredoresOrdenados.add(idCorredorSeleccionado)
                         } else {
-                            corredoresOrdenados[index] = idCorredorSeleccionado
+                            corredoresOrdenados[position] = idCorredorSeleccionado
                         }
+                        Log.i("DEBUG", "Seleccionado corredor para posición $position: ID $idCorredorSeleccionado")
                     }
 
-                    override fun onNothingSelected(parent: AdapterView<*>) {
-
-                    }
+                    override fun onNothingSelected(parent: AdapterView<*>) {}
                 }
 
+                container.addView(spinner)
 
                 val editTextTiempo = EditText(context)
                 editTextTiempo.hint = "Tiempo (hh:mm:ss)"
                 editTextTiempo.setSingleLine(true)
 
-                // Esto hace que se muestre el cuadro donde añadir el tiempo
+                editTextTiempo.setText(corredoresTiempos[position] ?: "")
+
                 editTextTiempo.setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {
                         val editTextInput = EditText(requireContext())
@@ -94,13 +108,15 @@ class ModificarResultados : Fragment() {
                             .setPositiveButton("Guardar") { _, _ ->
                                 val tiempoIngresado = editTextInput.text.toString().trim()
 
-                                if (tiempoIngresado.matches(Regex("^\\d{2}:\\d{2}:\\d{2}\$"))) {
+                                if (tiempoIngresado.matches(Regex("^(\\d{2}:\\d{2}:\\d{2}|DNF|DNS|DSQ|\\+\\d+ vuelta[s]?|\\+ \\d+ vuelta[s]?)\$", RegexOption.IGNORE_CASE))) {
                                     corredoresTiempos[position] = tiempoIngresado
                                     editTextTiempo.setText(tiempoIngresado)
+                                    Log.i("DEBUG", "Tiempo ingresado para posición $position: $tiempoIngresado")
+
                                 } else {
                                     Toast.makeText(
                                         context,
-                                        "Formato incorrecto. Usa hh:mm:ss",
+                                        "Formato incorrecto. Usa hh:mm:ss, '+ x vueltas' o (DNF, DNS, DSQ)",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
@@ -108,9 +124,8 @@ class ModificarResultados : Fragment() {
                             .setNegativeButton("Cancelar", null)
                             .show()
                     }
-
                 }
-                    container.addView(spinner)
+
                 container.addView(editTextTiempo)
 
                 return container
@@ -160,6 +175,7 @@ class ModificarResultados : Fragment() {
         FROM participante_carrera 
         JOIN corredores ON participante_carrera.id_participante = corredores.id
         WHERE participante_carrera.id_carrera = ?
+        order by participante_carrera.dorsal asc
     """, arrayOf(idCarrera.toString()))
 
         if (cursor.moveToFirst()) {
