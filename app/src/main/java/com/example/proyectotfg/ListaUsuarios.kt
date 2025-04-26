@@ -31,8 +31,8 @@ class ListaUsuarios : Fragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_lista_usuarios, container, false)
 
-        listViewUsuarios = view.findViewById(R.id.listViewCarreras)
-        editTextBuscarUsuario = view.findViewById(R.id.editTextTextBuscaCarrera)
+        listViewUsuarios = view.findViewById(R.id.listViewUsuarios)
+        editTextBuscarUsuario = view.findViewById(R.id.editTextTextBuscaUsuarios)
 
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
@@ -78,7 +78,7 @@ class ListaUsuarios : Fragment() {
         val db = dbHelper.readableDatabase
 
         val cursordeportistadeporte: Cursor = db.rawQuery(
-            "SELECT nombre FROM corredores WHERE id_deporte = ?",
+            "SELECT nombre FROM corredores WHERE id_deporte = ? order by nombre asc",
             arrayOf(idDeporte.toString())
         )
 

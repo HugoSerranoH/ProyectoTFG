@@ -33,7 +33,7 @@ class AnadirParticipante : Fragment() {
             return view
         }
 
-        // Cargar fragmentos
+
         val fragmentUsuarios = ListaUsuarios()
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainerViewTodosUsuarios, fragmentUsuarios)
@@ -46,7 +46,7 @@ class AnadirParticipante : Fragment() {
             .replace(R.id.fragmentContainerViewParticipantesanadidos, fragmentParticipantes)
             .commit()
 
-        // Al pulsar "Añadir", se solicita el dorsal y se inserta en la base de datos
+
         buttonAnadir.setOnClickListener {
             fragmentUsuarios.mostrarDialogoDorsal(::agregarParticipante)
         }
@@ -72,7 +72,7 @@ class AnadirParticipante : Fragment() {
     private fun agregarParticipante(nombre: String, dorsal: Int) {
         val db = dbHelper.writableDatabase
 
-        // Obtener ID del participante
+
         val cursor: Cursor = db.rawQuery("SELECT id FROM corredores WHERE nombre = ?", arrayOf(nombre))
         if (!cursor.moveToFirst()) {
             cursor.close()
@@ -82,7 +82,7 @@ class AnadirParticipante : Fragment() {
         val idParticipante = cursor.getInt(0)
         cursor.close()
 
-        // **Verificar si ya está registrado en la carrera**
+
         val checkNombre: Cursor = db.rawQuery(
             "SELECT id FROM participante_carrera WHERE id_participante = ? AND id_carrera = ?",
             arrayOf(idParticipante.toString(), idCarrera.toString())
@@ -107,7 +107,7 @@ class AnadirParticipante : Fragment() {
         }
         checkDorsal.close()
 
-        // **Insertar en la base de datos**
+
         db.execSQL(
             "INSERT INTO participante_carrera (id_participante, id_carrera, dorsal) VALUES (?, ?, ?)",
             arrayOf(idParticipante.toString(), idCarrera.toString(), dorsal.toString())
@@ -115,7 +115,7 @@ class AnadirParticipante : Fragment() {
 
         Toast.makeText(requireContext(), "$nombre añadido con dorsal $dorsal", Toast.LENGTH_SHORT).show()
 
-        // **Recargar `ListaParticipantes`**
+
         actualizarListaParticipantes()
     }
 
@@ -138,9 +138,10 @@ class AnadirParticipante : Fragment() {
             .setNegativeButton("Cancelar", null)
             .show()
     }
-    private fun eliminarParticipante(nombre: String) {
+    private fun eliminarParticipante(nombreConDorsal: String) {
         val db = dbHelper.writableDatabase
-
+        // esto es para que separe lo de antes de la coma
+        val nombre = nombreConDorsal.split(",")[0].trim()
         val cursor = db.rawQuery("SELECT id FROM corredores WHERE nombre = ?", arrayOf(nombre))
         if (cursor.moveToFirst()) {
             val idParticipante = cursor.getInt(0)
@@ -150,7 +151,6 @@ class AnadirParticipante : Fragment() {
 
             Toast.makeText(requireContext(), "$nombre eliminado", Toast.LENGTH_SHORT).show()
 
-            // **Actualizar lista después de eliminar**
             actualizarListaParticipantes()
         } else {
             cursor.close()

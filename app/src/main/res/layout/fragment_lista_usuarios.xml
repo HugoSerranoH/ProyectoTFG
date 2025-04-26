@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ListaUsuarios">>
+    tools:context=".ListaUsuarios">
 
     <EditText
-        android:id="@+id/editTextTextBuscaCarrera"
+        android:id="@+id/editTextTextBuscaUsuarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -15,7 +15,7 @@
         android:hint="Busca usuario" />
 
     <ListView
-        android:id="@+id/listViewCarreras"
+        android:id="@+id/listViewUsuarios"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

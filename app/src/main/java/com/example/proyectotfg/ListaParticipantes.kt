@@ -2,11 +2,14 @@ package com.example.proyectotfg
 
 import android.database.Cursor
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,14 +19,18 @@ class ListaParticipantes : Fragment() {
     private lateinit var dbHelper: BaseDatosEjemplo
     private var listaParticipantes = mutableListOf<String>()
     private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var editTextBuscarParticipante: EditText
+    private var listaParticipantesFiltrados = mutableListOf<String>()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_lista_participantes, container, false)
 
         listViewParticipantes = view.findViewById(R.id.listViewParticipantes)
+        editTextBuscarParticipante = view.findViewById(R.id.editTextTextBuscaParticipante)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
-        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_single_choice, listaParticipantes)
+        adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_single_choice, listaParticipantesFiltrados)
         listViewParticipantes.adapter = adapter
 
 
@@ -33,9 +40,18 @@ class ListaParticipantes : Fragment() {
         val idCarrera = arguments?.getInt("id_carrera", -1) ?: -1
         cargarParticipantes(idCarrera)
 
+        editTextBuscarParticipante.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                filtrarParticipantes(s.toString())
+            }
+        })
 
         listViewParticipantes.setOnItemClickListener { _, _, position, _ ->
-            val seleccionado = listaParticipantes[position]
+            val seleccionado = listaParticipantesFiltrados.getOrNull(position)
             Log.i("DEBUG", "Participante seleccionado -> $seleccionado")
         }
 
@@ -49,26 +65,40 @@ class ListaParticipantes : Fragment() {
         Log.i("DEBUG", "ListaParticipantes: Cargando participantes de la carrera ID=$idCarrera")
 
         val cursor: Cursor = db.rawQuery("""
-            SELECT corredores.nombre
+            SELECT corredores.nombre,participante_carrera.dorsal
             FROM participante_carrera
             JOIN corredores ON participante_carrera.id_participante = corredores.id
             WHERE participante_carrera.id_carrera = ?
+            order by participante_carrera.dorsal asc
         """, arrayOf(idCarrera.toString()))
 
         if (cursor.moveToFirst()) {
             do {
-                listaParticipantes.add(cursor.getString(0))
+                listaParticipantes.add("${cursor.getString(0)},  NºD: ${cursor.getInt(1)}")
             } while (cursor.moveToNext())
         }
         cursor.close()
-
+        listaParticipantesFiltrados.clear()
+        listaParticipantesFiltrados.addAll(listaParticipantes)
         adapter.notifyDataSetChanged()
     }
 
+    private fun filtrarParticipantes(texto: String) {
+        listaParticipantesFiltrados.clear()
+        if (texto.isEmpty()) {
+            listaParticipantesFiltrados.addAll(listaParticipantes)
+        } else {
+            listaParticipantesFiltrados.addAll(listaParticipantes.filter {
+                it.contains(texto, ignoreCase = true)
+            })
+        }
+        adapter.notifyDataSetChanged()
+
+    }
     fun obtenerParticipanteSeleccionado(): String? {
         val posicionSeleccionada = listViewParticipantes.checkedItemPosition
         return if (posicionSeleccionada != ListView.INVALID_POSITION) {
-            listaParticipantes[posicionSeleccionada]
+            listaParticipantesFiltrados.getOrNull(posicionSeleccionada)
         } else {
             null
         }
