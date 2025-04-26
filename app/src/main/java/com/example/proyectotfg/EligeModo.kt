@@ -7,12 +7,15 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 
 class EligeModo : AppCompatActivity() {
@@ -21,6 +24,8 @@ class EligeModo : AppCompatActivity() {
     private lateinit var spinnerDeportes: Spinner
     private lateinit var deportesList: MutableList<String>
     private lateinit var deportesIdList: MutableList<Int>
+    private lateinit var fragmentContainer: FragmentContainerView
+    private lateinit var imageviewconstruccion: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +39,8 @@ class EligeModo : AppCompatActivity() {
 
 
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
-
+        fragmentContainer = findViewById(R.id.fragmentAccion)
+        imageviewconstruccion = findViewById(R.id.imageViewconstruccion)
 
         dbHelper = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
         val db = dbHelper.readableDatabase
@@ -79,12 +85,16 @@ class EligeModo : AppCompatActivity() {
         // Selección de deporte en Spinner
         spinnerDeportes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
-                // Evitar navegación si la opción seleccionada es la inicial ("Selecciona un deporte")
+                val fondoconstraint = findViewById<View>(R.id.main)
                 if (deportesIdList[position] != -1) {
                     Log.i("DEBUG", "Spinner seleccionado: ${deportesList[position]} (ID: ${deportesIdList[position]})")
                     userViewModel.setDeporteSeleccionado(deportesIdList[position], deportesList[position])
+                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.white,theme))
                 } else {
                     Log.i("DEBUG", "Usuario no ha seleccionado ningún deporte todavía.")
+                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.light_light_blue,theme))
+                    fragmentContainer.visibility = View.GONE
+                    imageviewconstruccion.visibility = View.GONE
                 }
             }
 
@@ -125,8 +135,15 @@ class EligeModo : AppCompatActivity() {
         userViewModel.deporteSeleccionado.observe(this) { deporte ->
             deporte?.let { (_, nombreDeporte) ->
                 Log.i("DEBUG", "Cambiando Fragment a SeleccionAccion con deporte: $nombreDeporte")
-                val fragmentContainer = findViewById<View>(R.id.fragmentAccion)
-                fragmentContainer.visibility = View.VISIBLE
+                if (nombreDeporte.equals("Fútbol", ignoreCase = true) || nombreDeporte.equals("futbol", ignoreCase = true)) {
+                    fragmentContainer.visibility = View.GONE
+                    imageviewconstruccion.visibility = View.VISIBLE
+
+                } else {
+                    fragmentContainer.visibility = View.VISIBLE
+                    imageviewconstruccion.visibility = View.GONE
+                    Log.i("DEBUG", "Deporte seleccionado no es Fútbol. Mostrando fragment y ocultando ImageView.")
+                }
                 val fragment = supportFragmentManager.findFragmentById(R.id.fragmentAccion) as? SeleccionAccionFragment
                 fragment?.actualizarDeporte(nombreDeporte)
 //                fragment.visibility = View.VISIBLE

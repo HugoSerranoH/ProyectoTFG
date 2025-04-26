@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/brown"
-        android:text="Modificar/Ver"
+        android:text="Modificar/Ver carrera"
         app:layout_constraintStart_toStartOf="@+id/buttonBorrarCarrera"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarCarrera" />
 
@@ -102,7 +102,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/brown"
-        android:text="Modificar/Ver Deportista"
+        android:text="Modificar/Ver deportista"
         app:layout_constraintStart_toStartOf="@+id/buttonBorrarDeportista"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarDeportista" />
 

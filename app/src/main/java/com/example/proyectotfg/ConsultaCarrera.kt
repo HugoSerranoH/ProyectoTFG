@@ -61,7 +61,7 @@ class ConsultaCarrera : AppCompatActivity() {
         val iconosDeporte = mapOf(
             1 to R.drawable.bicycle_icon,  // ID 1 -> Icono de ciclismo
             2 to R.drawable.sprint_icon,
-            3 to R.drawable.forklift_icon,
+            3 to R.drawable.kart_icon,
             4 to R.drawable.useradd_icon
         )
 

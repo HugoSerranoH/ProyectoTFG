@@ -35,16 +35,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCreditos" />
 
+
     <TextView
         android:id="@+id/textViewCIPF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:text="Proyecto TFG realizado para el CIPF Juan de Herrrera"
+        android:layout_marginTop="48dp"
+        android:text="Proyecto TFG realizado para el:"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCreadopor" />
 
+    <ImageView
+        android:id="@+id/imageViewlogocifp"
+        android:layout_width="265dp"
+        android:layout_height="122dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCIPF"
+        app:srcCompat="@drawable/cifpjuandeherrera" />
 
     <TextView
         android:id="@+id/textViewVersion"
@@ -63,27 +73,29 @@
         android:id="@+id/imageViewgithubicon"
         android:layout_width="131dp"
         android:layout_height="112dp"
-        android:layout_marginTop="194dp"
+        android:layout_marginTop="94dp"
         android:layout_marginBottom="107dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewVersion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCIPF"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewlogocifp"
         app:srcCompat="@drawable/githubicon" />
 
     <ImageView
         android:id="@+id/imageViewlinkedinicon"
         android:layout_width="125dp"
         android:layout_height="114dp"
-        android:layout_marginTop="195dp"
+        android:layout_marginTop="95dp"
         android:layout_marginBottom="104dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewVersion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.863"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCIPF"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewlogocifp"
         app:srcCompat="@drawable/linkedinicon" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

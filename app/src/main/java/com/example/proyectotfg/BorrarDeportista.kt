@@ -27,12 +27,11 @@ class BorrarDeportista : Fragment() {
 
         Handler(Looper.getMainLooper()).post {
             val fragmentManager = requireActivity().supportFragmentManager
-            if (fragmentManager.findFragmentById(R.id.fragmentContainerViewBorrarUsuarios) == null) {
                 fragmentManager.beginTransaction()
                     .replace(R.id.fragmentContainerViewBorrarUsuarios, ListaUsuarios())
                     .commitAllowingStateLoss()
 
-            }
+
         }
 
         return view
@@ -88,4 +87,6 @@ class BorrarDeportista : Fragment() {
             .replace(R.id.fragmentContainerViewBorrarUsuarios, ListaUsuarios())
             .commitAllowingStateLoss()
     }
+
+
 }

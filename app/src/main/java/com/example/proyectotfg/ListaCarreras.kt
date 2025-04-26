@@ -77,7 +77,6 @@ class ListaCarreras : Fragment() {
 
         cursorlistacarreras.close()
 
-        // Inicializar el adaptador
         adapter = ArrayAdapter(
             requireContext(),
             android.R.layout.simple_list_item_1,
@@ -98,13 +97,15 @@ class ListaCarreras : Fragment() {
 
         // Mostrar el diálogo al hacer clic en una carrera
         listViewCarreras.setOnItemClickListener { _, _, position, _ ->
-            val idCarrera = listaCarreras[position].first
-            val nombreCarrera = listaCarreras[position].second
-
-            // Guardar carrera seleccionada
-            userViewModel.setCarreraSeleccionada(idCarrera, nombreCarrera)
-
-            mostrarDialogoSeleccion(idCarrera, nombreCarrera)
+            val carreraSeleccionada = adapter.getItem(position)
+            val idCarrera = listaCarreras.find { it.second == carreraSeleccionada }?.first
+            if (idCarrera != null) {
+                val nombreCarrera = carreraSeleccionada ?: ""
+                userViewModel.setCarreraSeleccionada(idCarrera, nombreCarrera)
+                mostrarDialogoSeleccion(idCarrera, nombreCarrera)
+            } else {
+                Toast.makeText(requireContext(), "Error al seleccionar la carrera", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return view

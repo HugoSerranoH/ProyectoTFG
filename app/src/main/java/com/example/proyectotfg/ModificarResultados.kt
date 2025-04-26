@@ -119,6 +119,7 @@ class ModificarResultados : Fragment() {
                                         "Formato incorrecto. Usa hh:mm:ss, '+ x vueltas' o (DNF, DNS, DSQ)",
                                         Toast.LENGTH_SHORT
                                     ).show()
+                                    editTextTiempo.setText(corredoresTiempos[position] ?: "")
                                 }
                             }
                             .setNegativeButton("Cancelar", null)
