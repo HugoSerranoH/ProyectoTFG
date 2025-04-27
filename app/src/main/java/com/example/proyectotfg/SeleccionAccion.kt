@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -33,6 +34,7 @@ class SeleccionAccionFragment : Fragment() {
         val botonmodificarver = view.findViewById<Button>(R.id.buttonModificar)
         val botonBorrarDeportista = view.findViewById<Button>(R.id.buttonBorrarDeportista)
         val botonModificarDeportista = view.findViewById<Button>(R.id.buttonModificarDeportista)
+
 
         textViewElegido.text = "Has seleccionado como deporte: $nombreDeporte"
 
@@ -97,7 +99,23 @@ class SeleccionAccionFragment : Fragment() {
         this.nombreDeporte = nombreDeporte
         view?.findViewById<TextView>(R.id.textViewElegidoDeporte)?.text =
             "Has seleccionado como deporte: $nombreDeporte"
+
+        val backgroundImage = view?.findViewById<ImageView>(R.id.imagenfondoaccion)
+        when (nombreDeporte.lowercase()) {
+            "ciclismo" -> {
+                val ciclismoFondos = arrayOf(
+                R.drawable.fondociclismo,
+                R.drawable.fondociclismo2,
+                R.drawable.fondo_ciclismo, )
+                val fondociclismoaleatorio = ciclismoFondos.random()
+                backgroundImage?.setImageResource(fondociclismoaleatorio)
+            }
+            "atletismo" -> backgroundImage?.setImageResource(R.drawable.fondoatletismo)
+            "karts" -> backgroundImage?.setImageResource(R.drawable.fondokarts)
+            else -> backgroundImage?.setImageDrawable(null)
+        }
     }
+
 
     private fun cambiarFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager.beginTransaction()

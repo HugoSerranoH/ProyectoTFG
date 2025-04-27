@@ -5,15 +5,13 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EligeModo"
-    android:background="@color/light_light_blue">
+    tools:context=".EligeModo">
 
 
     <TextView
         android:id="@+id/textViewDeporte_usuario"
         android:layout_width="418dp"
         android:layout_height="83dp"
-        android:background="@color/light_light_blue"
         android:gravity="center"
         android:text="Elige el deporte , nombre_usuario "
         android:textSize="20sp"
@@ -26,7 +24,6 @@
         android:id="@+id/spinner2"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
-        android:background="@color/light_light_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDeporte_usuario" />

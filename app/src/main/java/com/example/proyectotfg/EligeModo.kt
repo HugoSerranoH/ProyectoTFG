@@ -89,10 +89,10 @@ class EligeModo : AppCompatActivity() {
                 if (deportesIdList[position] != -1) {
                     Log.i("DEBUG", "Spinner seleccionado: ${deportesList[position]} (ID: ${deportesIdList[position]})")
                     userViewModel.setDeporteSeleccionado(deportesIdList[position], deportesList[position])
-                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.white,theme))
+//                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.white,theme))
                 } else {
                     Log.i("DEBUG", "Usuario no ha seleccionado ningún deporte todavía.")
-                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.light_light_blue,theme))
+//                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.light_light_blue,theme))
                     fragmentContainer.visibility = View.GONE
                     imageviewconstruccion.visibility = View.GONE
                 }

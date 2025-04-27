@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".SeleccionAccionFragment">
 
+    <ImageView
+        android:id="@+id/imagenfondoaccion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:alpha="0.5"
+        />
 
     <TextView
         android:id="@+id/textViewElegidoDeporte"
@@ -105,5 +116,7 @@
         android:text="Modificar/Ver deportista"
         app:layout_constraintStart_toStartOf="@+id/buttonBorrarDeportista"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarDeportista" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
