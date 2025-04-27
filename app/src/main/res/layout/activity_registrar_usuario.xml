@@ -32,7 +32,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/editTextRegistroNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -48,12 +48,12 @@
         android:layout_height="38dp"
         android:layout_marginTop="20dp"
         android:text="Contraseña *"
-        app:layout_constraintStart_toStartOf="@+id/editTextText"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegistroNombre"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegistroNombre"
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editTextText2"
+        android:id="@+id/editTextRegistroContrasena"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="11dp"
@@ -69,12 +69,12 @@
         android:layout_height="38dp"
         android:layout_marginTop="17dp"
         android:text="Telefono *"
-        app:layout_constraintStart_toStartOf="@+id/editTextText2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText2"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegistroContrasena"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegistroContrasena"
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editTextText3"
+        android:id="@+id/editTextRegistroTelefono"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
@@ -90,12 +90,12 @@
         android:layout_height="38dp"
         android:layout_marginTop="19dp"
         android:text="Email *"
-        app:layout_constraintStart_toStartOf="@+id/editTextText3"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText3"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegistroTelefono"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegistroTelefono"
         android:textStyle="bold"/>
 
     <EditText
-        android:id="@+id/editTextText4"
+        android:id="@+id/editTextRegistroEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -111,12 +111,12 @@
         android:layout_height="38dp"
         android:layout_marginTop="26dp"
         android:text="Sexo"
-        app:layout_constraintStart_toStartOf="@+id/editTextText4"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText4"
+        app:layout_constraintStart_toStartOf="@+id/editTextRegistroEmail"
+        app:layout_constraintTop_toBottomOf="@+id/editTextRegistroEmail"
         android:textStyle="bold"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinnerRegistroSexo"
         android:layout_width="0dp"
         android:layout_height="22dp"
         android:layout_marginTop="16dp"
@@ -134,6 +134,6 @@
         android:onClick="insertarUsuario"
         android:text="Registrar usuario"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/spinnerRegistroSexo"
         android:backgroundTint="@color/green"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

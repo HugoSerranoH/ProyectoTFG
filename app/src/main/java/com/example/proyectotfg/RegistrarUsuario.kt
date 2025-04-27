@@ -27,28 +27,24 @@ class RegistrarUsuario : AppCompatActivity() {
             insets
         }
 
-        // Inicializar base de datos
+
         val dbHelper = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
         db = dbHelper.writableDatabase
 
-        // Referencias a los elementos del XML
-        val nombreUsuario = findViewById<EditText>(R.id.editTextText)
-        val contraseña = findViewById<EditText>(R.id.editTextText2)
-        val telefono = findViewById<EditText>(R.id.editTextText3)
-        val email = findViewById<EditText>(R.id.editTextText4)
-        val sexoSpinner = findViewById<Spinner>(R.id.spinner)
-        val registrarButton = findViewById<Button>(R.id.buttonRegistrar) // Asegúrate de agregar este botón al XML
 
-        // Configurar el Spinner
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.sexo_opciones,
-            android.R.layout.simple_spinner_item
-        )
+        val nombreUsuario = findViewById<EditText>(R.id.editTextRegistroNombre)
+        val contraseña = findViewById<EditText>(R.id.editTextRegistroContrasena)
+        val telefono = findViewById<EditText>(R.id.editTextRegistroTelefono)
+        val email = findViewById<EditText>(R.id.editTextRegistroEmail)
+        val sexoSpinner = findViewById<Spinner>(R.id.spinnerRegistroSexo)
+        val registrarButton = findViewById<Button>(R.id.buttonRegistrar)
+
+
+        val adapter = ArrayAdapter.createFromResource(this, R.array.sexo_opciones, android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sexoSpinner.adapter = adapter
 
-        // Acción para el botón de registro
+
         registrarButton.setOnClickListener {
             val nombre = nombreUsuario.text.toString()
             val pass = contraseña.text.toString()

@@ -17,7 +17,9 @@ class SeleccionAccionFragment : Fragment() {
 
     private lateinit var userViewModel: UserViewModel
     private var nombreDeporte: String? = null
-
+    private lateinit var ciclismoFondos: Array<Int>
+    private lateinit var atletismoFondos: Array<Int>
+    private lateinit var kartsFondos: Array<Int>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,6 +28,8 @@ class SeleccionAccionFragment : Fragment() {
 
 
         userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+
+
 
         val textViewElegido = view.findViewById<TextView>(R.id.textViewElegidoDeporte)
         val botonCrearDeportista = view.findViewById<Button>(R.id.buttonCrearDeportista)
@@ -91,9 +95,32 @@ class SeleccionAccionFragment : Fragment() {
 
 
 
+        ciclismoFondos = arrayOf(
+            R.drawable.fondociclismo,
+            R.drawable.fondociclismo2,
+            R.drawable.fondociclismo3,
+            R.drawable.fondociclismo4, )
+
+        atletismoFondos = arrayOf(
+            R.drawable.fondoatletismo,
+            R.drawable.fondoatletismo2,
+            R.drawable.fondoatletismo3,)
+
+        kartsFondos = arrayOf(
+            R.drawable.fondokarts,
+            R.drawable.fondokarts2,)
 
         return view
     }
+
+    override fun onResume() {
+        super.onResume()
+        val deporteActual = userViewModel.deporteSeleccionado.value?.second
+        deporteActual?.let {
+            actualizarDeporte(it)
+        }
+    }
+
 
     fun actualizarDeporte(nombreDeporte: String) {
         this.nombreDeporte = nombreDeporte
@@ -104,27 +131,14 @@ class SeleccionAccionFragment : Fragment() {
 
         when (nombreDeporte.lowercase()) {
             "ciclismo" -> {
-                val ciclismoFondos = arrayOf(
-                R.drawable.fondociclismo,
-                R.drawable.fondociclismo2,
-                R.drawable.fondociclismo3,
-                R.drawable.fondociclismo4, )
                 val fondociclismoaleatorio = ciclismoFondos.random()
                 Imagenfondo?.setImageResource(fondociclismoaleatorio)
             }
             "atletismo" -> {
-                val atletismoFondos = arrayOf(
-                    R.drawable.fondoatletismo,
-                    R.drawable.fondoatletismo2,
-                    R.drawable.fondoatletismo3,)
                 val fondoatletismoaleatorio = atletismoFondos.random()
                 Imagenfondo?.setImageResource(fondoatletismoaleatorio)
             }
             "karts" -> {
-                val kartsFondos = arrayOf(
-                    R.drawable.fondokarts,
-                    R.drawable.fondokarts2,
-                    R.drawable.fondokarts3,)
                 val fondokartsaleatorio = kartsFondos.random()
                 Imagenfondo?.setImageResource(fondokartsaleatorio)
             }

@@ -43,7 +43,7 @@
         android:layout_width="95dp"
         android:layout_height="49dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/red"
         android:text="Borrar"
         app:layout_constraintBottom_toBottomOf="parent"
