@@ -100,7 +100,8 @@ class SeleccionAccionFragment : Fragment() {
         view?.findViewById<TextView>(R.id.textViewElegidoDeporte)?.text =
             "Has seleccionado como deporte: $nombreDeporte"
 
-        val backgroundImage = view?.findViewById<ImageView>(R.id.imagenfondoaccion)
+        val Imagenfondo = view?.findViewById<ImageView>(R.id.imagenfondoaccion)
+
         when (nombreDeporte.lowercase()) {
             "ciclismo" -> {
                 val ciclismoFondos = arrayOf(
@@ -108,11 +109,23 @@ class SeleccionAccionFragment : Fragment() {
                 R.drawable.fondociclismo2,
                 R.drawable.fondo_ciclismo, )
                 val fondociclismoaleatorio = ciclismoFondos.random()
-                backgroundImage?.setImageResource(fondociclismoaleatorio)
+                Imagenfondo?.setImageResource(fondociclismoaleatorio)
             }
-            "atletismo" -> backgroundImage?.setImageResource(R.drawable.fondoatletismo)
-            "karts" -> backgroundImage?.setImageResource(R.drawable.fondokarts)
-            else -> backgroundImage?.setImageDrawable(null)
+            "atletismo" -> {
+                val atletismoFondos = arrayOf(
+                    R.drawable.fondoatletismo,
+                    R.drawable.fondoatletismo2,)
+                val fondoatletismoaleatorio = atletismoFondos.random()
+                Imagenfondo?.setImageResource(fondoatletismoaleatorio)
+            }
+            "karts" -> {
+                val kartsFondos = arrayOf(
+                    R.drawable.fondokarts,
+                    R.drawable.fondokarts2,)
+                val fondokartsaleatorio = kartsFondos.random()
+                Imagenfondo?.setImageResource(fondokartsaleatorio)
+            }
+            else -> Imagenfondo?.setImageDrawable(null)
         }
     }
 

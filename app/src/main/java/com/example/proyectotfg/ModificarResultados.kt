@@ -37,6 +37,7 @@ class ModificarResultados : Fragment() {
 
         corredoresDisponibles = obtenerListaCorredores()
         inicializarListaPosiciones()
+        cargarResultadosExistentes()
 
 
         adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_list_item_1, listaPosiciones) {
@@ -153,25 +154,13 @@ class ModificarResultados : Fragment() {
         }
     }
 
-    private fun obtenerNumeroCorredores(): Int {
-        val db = dbHelper.readableDatabase
-        val cursor = db.rawQuery("SELECT COUNT(*) FROM participante_carrera WHERE id_carrera = ?", arrayOf(idCarrera.toString()))
-
-        var cantidad = 0
-        if (cursor.moveToFirst()) {
-            cantidad = cursor.getInt(0)
-        }
-        cursor.close()
-        return cantidad
-    }
-
     private fun obtenerListaCorredores(): List<Pair<Int, String>> {
         val db = dbHelper.readableDatabase
         val listaCorredores = mutableListOf<Pair<Int, String>>()
 
         listaCorredores.add(Pair(-1, "Agregar corredor"))
 
-        val cursor = db.rawQuery("""
+        val cursorobtenerlista = db.rawQuery("""
         SELECT participante_carrera.id, corredores.nombre, participante_carrera.dorsal 
         FROM participante_carrera 
         JOIN corredores ON participante_carrera.id_participante = corredores.id
@@ -179,18 +168,49 @@ class ModificarResultados : Fragment() {
         order by participante_carrera.dorsal asc
     """, arrayOf(idCarrera.toString()))
 
-        if (cursor.moveToFirst()) {
+        if (cursorobtenerlista.moveToFirst()) {
             do {
-                val id = cursor.getInt(0)
-                val nombre = cursor.getString(1)
-                val dorsal = cursor.getInt(2)
-                listaCorredores.add(Pair(id, "Dorsal: $dorsal - $nombre"))
-            } while (cursor.moveToNext())
+                val id = cursorobtenerlista.getInt(0)
+                val nombre = cursorobtenerlista.getString(1)
+                val dorsal = cursorobtenerlista.getInt(2)
+                listaCorredores.add(Pair(id, "Nº: $dorsal - $nombre"))
+            } while (cursorobtenerlista.moveToNext())
         }
-        cursor.close()
+        cursorobtenerlista.close()
 
         return listaCorredores
     }
+
+    private fun cargarResultadosExistentes() {
+        val db = dbHelper.readableDatabase
+
+        val cursorexistentes = db.rawQuery("""
+        SELECT rc.posicion, pc.id, rc.tiempo 
+        FROM resultados_carrera rc
+        JOIN participante_carrera pc ON rc.id_participante_carrera = pc.id
+        WHERE pc.id_carrera = ?
+        ORDER BY rc.posicion ASC
+        """, arrayOf(idCarrera.toString()))
+
+        corredoresOrdenados.clear()
+        corredoresTiempos.clear()
+
+        if (cursorexistentes.moveToFirst()) {
+            do {
+                val posicion = cursorexistentes.getInt(0) - 1
+                val idParticipante = cursorexistentes.getInt(1)
+                val tiempo = cursorexistentes.getString(2)
+
+                while (corredoresOrdenados.size <= posicion) corredoresOrdenados.add(null)
+                corredoresOrdenados[posicion] = idParticipante
+                corredoresTiempos[posicion] = tiempo
+
+            } while (cursorexistentes.moveToNext())
+        }
+
+        cursorexistentes.close()
+    }
+
 
     private fun actualizarResultados() {
         val db = dbHelper.writableDatabase
