@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 class ModificarResultados : Fragment() {
     private lateinit var listViewResultados: ListView
     private lateinit var buttonActualizarResultados: Button
+    private lateinit var buttonBorrarResultados: Button
     private lateinit var dbHelper: BaseDatosEjemplo
     private var listaPosiciones = mutableListOf<String>()
     private lateinit var adapter: ArrayAdapter<String>
@@ -26,6 +27,7 @@ class ModificarResultados : Fragment() {
 
         listViewResultados = view.findViewById(R.id.listViewResultados)
         buttonActualizarResultados = view.findViewById(R.id.buttonActualizarResultados)
+        buttonBorrarResultados = view.findViewById(R.id.buttonBorrarResultados)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
         idCarrera = requireActivity().intent.getIntExtra("id_carrera", -1)
@@ -83,7 +85,7 @@ class ModificarResultados : Fragment() {
                         } else {
                             corredoresOrdenados[position] = idCorredorSeleccionado
                         }
-                        Log.i("DEBUG", "Seleccionado corredor para posición $position: ID $idCorredorSeleccionado")
+//                        Log.i("DEBUG", "Seleccionado corredor para posición $position: ID $idCorredorSeleccionado")
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -138,6 +140,9 @@ class ModificarResultados : Fragment() {
 
         buttonActualizarResultados.setOnClickListener {
             actualizarResultados()
+        }
+        buttonBorrarResultados.setOnClickListener {
+            borrarResultados()
         }
 
         return view
@@ -235,9 +240,17 @@ class ModificarResultados : Fragment() {
                 Log.e("ERROR", "No se pudo extraer un ID válido de la lista de posiciones en el índice $index")
             }
         }
+        Toast.makeText(requireContext(), "Resultados actualizados correctamente", Toast.LENGTH_SHORT).show()
+    }
 
+    private fun borrarResultados(){
+        val db = dbHelper.writableDatabase
+        db.execSQL("DELETE FROM resultados_carrera WHERE id_participante_carrera IN (SELECT id FROM participante_carrera WHERE id_carrera = ?)", arrayOf(idCarrera.toString()))
+        Toast.makeText(requireContext(), "Resultados borrados correctamente", Toast.LENGTH_SHORT).show()
 
-    // SELECT PARA COMPROBAR ANTES DE CREAR VER CARRERA
+    }
+
+    // SELECT PARA COMPROBAR ANTES DE CREAR VER CARRERA(VA DENTRO DE ACTUALIZAR RESULTADOS)
 //        val cursor = db.rawQuery(
 //            "SELECT id_participante_carrera, posicion, tiempo FROM resultados_carrera WHERE id_participante_carrera IN (SELECT id FROM participante_carrera WHERE id_carrera = ?)",
 //            arrayOf(idCarrera.toString())
@@ -257,6 +270,6 @@ class ModificarResultados : Fragment() {
 //
 //        cursor.close()
 
-        Toast.makeText(requireContext(), "Resultados actualizados correctamente", Toast.LENGTH_SHORT).show()
-    }
+
+
 }

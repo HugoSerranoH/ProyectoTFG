@@ -68,10 +68,10 @@ class ListaCarreras : Fragment() {
                 val nombreCarrera = cursorlistacarreras.getString(1)
                 val localidad = cursorlistacarreras.getString(2)
                 listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad"))
-                Log.i("DEBUG", "Lista_Carreras: Carrera encontrada -> ID: $idCarrera, Nombre: $nombreCarrera, Localidad: $localidad")
+//                Log.i("DEBUG", "Lista_Carreras: Carrera encontrada -> ID: $idCarrera, Nombre: $nombreCarrera, Localidad: $localidad")
             } while (cursorlistacarreras.moveToNext())
         } else {
-            Log.w("WARNING", "Lista_Carreras: No se encontraron carreras para el ID de deporte = $idDeporte")
+//            Log.i("WARNING", "Lista_Carreras: No se encontraron carreras para el ID de deporte = $idDeporte")
             Toast.makeText(requireContext(), "No hay carreras para este deporte", Toast.LENGTH_SHORT).show()
         }
 

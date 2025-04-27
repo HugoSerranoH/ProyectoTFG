@@ -107,21 +107,24 @@ class SeleccionAccionFragment : Fragment() {
                 val ciclismoFondos = arrayOf(
                 R.drawable.fondociclismo,
                 R.drawable.fondociclismo2,
-                R.drawable.fondo_ciclismo, )
+                R.drawable.fondociclismo3,
+                R.drawable.fondociclismo4, )
                 val fondociclismoaleatorio = ciclismoFondos.random()
                 Imagenfondo?.setImageResource(fondociclismoaleatorio)
             }
             "atletismo" -> {
                 val atletismoFondos = arrayOf(
                     R.drawable.fondoatletismo,
-                    R.drawable.fondoatletismo2,)
+                    R.drawable.fondoatletismo2,
+                    R.drawable.fondoatletismo3,)
                 val fondoatletismoaleatorio = atletismoFondos.random()
                 Imagenfondo?.setImageResource(fondoatletismoaleatorio)
             }
             "karts" -> {
                 val kartsFondos = arrayOf(
                     R.drawable.fondokarts,
-                    R.drawable.fondokarts2,)
+                    R.drawable.fondokarts2,
+                    R.drawable.fondokarts3,)
                 val fondokartsaleatorio = kartsFondos.random()
                 Imagenfondo?.setImageResource(fondokartsaleatorio)
             }
