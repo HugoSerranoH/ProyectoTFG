@@ -29,7 +29,8 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="18dp"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -37,6 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="OPCIONES CARRERAS"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +49,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/light_green"
+        style="@style/BotonesVerdes"
         android:text="Crear carrera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,7 +60,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/light_red"
+        style="@style/BotonesRojos"
         android:text="Borrar carrera"
         app:layout_constraintStart_toStartOf="@+id/buttonCrearCarrera"
         app:layout_constraintTop_toBottomOf="@+id/buttonCrearCarrera" />
@@ -69,7 +71,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/brown"
+        style="@style/BotonesMarrones"
         android:text="Modificar/Ver carrera"
         app:layout_constraintStart_toStartOf="@+id/buttonBorrarCarrera"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarCarrera" />
@@ -81,6 +83,7 @@
         android:layout_marginStart="56dp"
         android:layout_marginTop="30dp"
         android:text="OPCIONES DEPORTISTAS"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/buttonModificar"
         app:layout_constraintTop_toBottomOf="@+id/buttonModificar" />
@@ -90,7 +93,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/light_green"
+        style="@style/BotonesVerdes"
         android:text="Crear deportista"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +104,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/light_red"
+        style="@style/BotonesRojos"
         android:text="Borrar deportista"
         app:layout_constraintStart_toStartOf="@+id/buttonCrearDeportista"
         app:layout_constraintTop_toBottomOf="@+id/buttonCrearDeportista" />
@@ -112,7 +115,7 @@
         android:layout_width="283dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/brown"
+        style="@style/BotonesMarrones"
         android:text="Modificar/Ver deportista"
         app:layout_constraintStart_toStartOf="@+id/buttonBorrarDeportista"
         app:layout_constraintTop_toBottomOf="@+id/buttonBorrarDeportista" />

@@ -1,17 +1,20 @@
 package com.example.proyectotfg
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-
 import androidx.lifecycle.ViewModelProvider
+
 
 class SeleccionAccionFragment : Fragment() {
 
@@ -99,17 +102,32 @@ class SeleccionAccionFragment : Fragment() {
             R.drawable.fondociclismo,
             R.drawable.fondociclismo2,
             R.drawable.fondociclismo3,
-            R.drawable.fondociclismo4, )
+            R.drawable.fondociclismo4,
+        )
 
         atletismoFondos = arrayOf(
             R.drawable.fondoatletismo,
             R.drawable.fondoatletismo2,
-            R.drawable.fondoatletismo3,)
+            R.drawable.fondoatletismo3,
+        )
 
         kartsFondos = arrayOf(
             R.drawable.fondokarts,
-            R.drawable.fondokarts2,)
+            R.drawable.fondokarts2,
+        )
 
+
+        val animacionIzquierda = AnimationUtils.loadAnimation(requireContext(), R.anim.desdeizquierda)
+        val animacionDerecha = AnimationUtils.loadAnimation(requireContext(), R.anim.desdederecha)
+
+
+        botonCrearDeportista.startAnimation(animacionIzquierda)
+        botonBorrarDeportista.startAnimation(animacionDerecha)
+        botonModificarDeportista.startAnimation(animacionIzquierda)
+
+        botonCrearCarrera.startAnimation(animacionIzquierda)
+        botonBorrarCarrera.startAnimation(animacionDerecha)
+        botonmodificarver.startAnimation(animacionIzquierda)
         return view
     }
 
