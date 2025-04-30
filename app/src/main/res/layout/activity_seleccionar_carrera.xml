@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttontablaexterna"
+        app:layout_constraintBottom_toTopOf="@+id/buttonElegirDeporte"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -29,25 +29,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttontablaexterna"
-        android:layout_width="255dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="38dp"
-        android:text="Seleccionar una tabla externa"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
         android:id="@+id/buttonElegirDeporte"
-        android:layout_width="125dp"
-        android:layout_height="69dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="160dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginBottom="4dp"
         android:backgroundTint="@color/grey"
         android:text="Elegir Deporte"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttontablaexterna"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

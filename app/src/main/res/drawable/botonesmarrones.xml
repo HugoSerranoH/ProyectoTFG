@@ -4,10 +4,10 @@
 
     <gradient
         android:angle="90"
-        android:endColor="@color/light_brown"
+        android:endColor="@color/dark_brown"
         android:centerColor="@color/brown"
         android:startColor="@color/light_brown"
-        android:type="sweep"
+        android:type="linear"
         />
     <corners android:radius="15dp">
 
