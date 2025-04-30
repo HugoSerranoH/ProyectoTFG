@@ -65,18 +65,18 @@ class EligeModo : AppCompatActivity() {
         Log.i("DEBUG", "Deportes cargados: $deportesList")
 
         val deportesIconList = mutableListOf(
-            R.drawable.construction_icon,
+            R.drawable.transparente_icon,
             R.drawable.bicycle_icon, // Icono para "Ciclismo"
             R.drawable.sprint_icon, // Icono para "Atletismo"
-            R.drawable.forklift_icon, // Icono para "karts"
-            R.drawable.construction_icon, // Icono para "Fútbol"
+            R.drawable.kart_icon, // Icono para "karts"
+            R.drawable.construction_icon, // Icono para "Fútbol(en construccion)"
 
         )
 
 
         // Configuración del Spinner
         spinnerDeportes = findViewById(R.id.spinner2)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, deportesList)
+        val adapter = DeporteAdapter(this, deportesList, deportesIconList)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
 
@@ -85,7 +85,7 @@ class EligeModo : AppCompatActivity() {
         // Selección de deporte en Spinner
         spinnerDeportes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
-                val fondoconstraint = findViewById<View>(R.id.main)
+//                val fondoconstraint = findViewById<View>(R.id.main)
                 if (deportesIdList[position] != -1) {
                     Log.i("DEBUG", "Spinner seleccionado: ${deportesList[position]} (ID: ${deportesIdList[position]})")
                     userViewModel.setDeporteSeleccionado(deportesIdList[position], deportesList[position])
@@ -167,6 +167,8 @@ class EligeModo : AppCompatActivity() {
 
         // Mostrar el nombre del usuario en el TextView
         val nombreUsuario = intent.getStringExtra("nombre_usuario")
+        nombreUsuario?.let { userViewModel.setUsuario(it) }
+
         val textViewArriba = findViewById<TextView>(R.id.textViewDeporte_usuario)
         textViewArriba.text = "Elige el deporte, $nombreUsuario"
     }

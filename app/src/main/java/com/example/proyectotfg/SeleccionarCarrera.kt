@@ -13,10 +13,14 @@ class SeleccionarCarrera : AppCompatActivity() {
         setContentView(R.layout.activity_seleccionar_carrera)
         botonElegirModo = findViewById(R.id.buttonElegirDeporte)
         val idDeporte = intent.getIntExtra("id_deporte", -1)
+        val nombreUsuario = intent.getStringExtra("nombre_usuario") ?: "usuario"
 //        Log.i("DEBUG", "ID del deporte recibido en Seleccionar_Carrera: $idDeporte")
 
         botonElegirModo.setOnClickListener {
-            val intent = Intent(this, EligeModo::class.java)
+            val intent = Intent(this, EligeModo::class.java).apply {
+                putExtra("nombre_usuario", nombreUsuario)
+            }
+
             startActivity(intent)
 
         }

@@ -92,6 +92,7 @@ class SeleccionAccionFragment : Fragment() {
         botonmodificarver.setOnClickListener {
             val intent = Intent(requireContext(), SeleccionarCarrera::class.java).apply {
                 putExtra("id_deporte", userViewModel.deporteSeleccionado.value?.first ?: -1)
+                putExtra("nombre_usuario", userViewModel.usuario.value ?: "usuario")
             }
             startActivity(intent)
         }
