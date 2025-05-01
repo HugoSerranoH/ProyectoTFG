@@ -26,6 +26,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.Manifest
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Paint
+import android.graphics.Typeface
+import android.graphics.pdf.PdfDocument
 import android.widget.TextView
 
 class VerResultados : Fragment() {
@@ -67,6 +72,10 @@ class VerResultados : Fragment() {
             } else {
                 guardarCSV()
             }
+        }
+
+        buttonpdf.setOnClickListener {
+            guardarPDF()
         }
 
         buttonvolver.setOnClickListener {
@@ -255,4 +264,148 @@ class VerResultados : Fragment() {
             }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun guardarPDF() {
+        val db = dbHelper.readableDatabase
+        val cursorNombreCarrera = db.rawQuery("SELECT nombre_carrera FROM carreras WHERE id = ?", arrayOf(idCarrera.toString()))
+        var nombreCarrera = "Carrera"
+        if (cursorNombreCarrera.moveToFirst()) {
+            nombreCarrera = cursorNombreCarrera.getString(0)
+        }
+        cursorNombreCarrera.close()
+        val iconosDeporte = mapOf(
+            "Ciclismo" to R.drawable.bicycle_icon,
+            "Atletismo" to R.drawable.sprint_icon,
+            "Karts" to R.drawable.kart_icon
+        )
+        val coloresFondo = mapOf(
+            1 to R.color.light_grey,
+            2 to R.color.light_brown,
+            3 to R.color.lime
+        )
+
+        var deporteCiclismo = false
+        var deporteAtletismo = false
+        var deporteKarts = false
+        var nombreDeporte = ""
+        val cursorDeporte = db.rawQuery(
+            "SELECT d.nombre_deporte FROM deportes d INNER JOIN carreras c ON d.id = c.id_deporte WHERE c.id = ?",
+            arrayOf(idCarrera.toString())
+        )
+        if (cursorDeporte.moveToFirst()) {
+            nombreDeporte = cursorDeporte.getString(0)
+            deporteCiclismo = nombreDeporte.equals("Ciclismo", ignoreCase = true)
+            deporteAtletismo = nombreDeporte.equals("Atletismo", ignoreCase = true)
+            deporteKarts = nombreDeporte.equals("Karts", ignoreCase = true)
+
+        }
+        cursorDeporte.close()
+
+        val encabezadoEquipo = if (deporteKarts) "Escudería" else "Equipo"
+        val encabezadoDorsal = if (deporteKarts) "Número" else "Dorsal"
+
+        val pdfDocument = PdfDocument()
+        val paint = Paint()
+        val titlePaint = Paint()
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+        val page = pdfDocument.startPage(pageInfo)
+        var canvas = page.canvas
+        titlePaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+        titlePaint.textSize = 20f
+        titlePaint.textAlign = Paint.Align.CENTER
+
+        val colorTitulo = when {
+            deporteCiclismo -> coloresFondo[1]
+            deporteAtletismo -> coloresFondo[2]
+            deporteKarts -> coloresFondo[3]
+            else -> R.color.black
+        }
+        titlePaint.color = ContextCompat.getColor(requireContext(), colorTitulo ?: R.color.black)
+        canvas.drawText(nombreCarrera, (pageInfo.pageWidth / 2).toFloat(), 50f, titlePaint)
+        paint.textSize = 12f
+        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
+
+        val iconoResId = iconosDeporte[nombreDeporte]
+        if (iconoResId != null) {
+            val bitmap = BitmapFactory.decodeResource(resources, iconoResId)
+            val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 40, 40, false)
+            canvas.drawBitmap(scaledBitmap, (pageInfo.pageWidth - 60).toFloat(), 30f, null)
+        }
+        val startX = 40f
+        var currentY = 90f
+        val rowHeight = 20f
+
+        canvas.drawText("Pos", startX, currentY, paint)
+        canvas.drawText("Nombre", startX + 40, currentY, paint)
+        canvas.drawText(encabezadoEquipo, startX + 180, currentY, paint)
+        canvas.drawText(encabezadoDorsal, startX + 320, currentY, paint)
+        canvas.drawText("Tiempo", startX + 400, currentY, paint)
+        paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
+
+
+        val cursorverpdf = db.rawQuery("""
+        SELECT r.posicion, c.nombre, c.equipo, p.dorsal, r.tiempo
+        FROM resultados_carrera r
+        JOIN participante_carrera p ON r.id_participante_carrera = p.id
+        JOIN corredores c ON p.id_participante = c.id
+        WHERE p.id_carrera = ?
+        ORDER BY r.posicion ASC
+    """, arrayOf(idCarrera.toString()))
+
+        if (cursorverpdf.moveToFirst()) {
+            do {
+                currentY += rowHeight
+                if (currentY > pageInfo.pageHeight - 50) {
+                    pdfDocument.finishPage(page)
+                    val newPageInfo = PdfDocument.PageInfo.Builder(595, 842, pdfDocument.pages.size + 1).create()
+                    val newPage = pdfDocument.startPage(newPageInfo)
+                    canvas = newPage.canvas
+                    currentY = 90f
+                }
+
+                val posicion = (cursorverpdf.getInt(0).toString() + "." )
+                val nombre = cursorverpdf.getString(1)
+                val equipo = cursorverpdf.getString(2) ?: "Sin equipo"
+                val dorsal = cursorverpdf.getInt(3).toString()
+                val tiempo = cursorverpdf.getString(4)
+
+                canvas.drawText(posicion, startX, currentY, paint)
+                canvas.drawText(nombre, startX + 40, currentY, paint)
+                canvas.drawText(equipo, startX + 180, currentY, paint)
+                canvas.drawText(dorsal, startX + 320, currentY, paint)
+                canvas.drawText(tiempo, startX + 400, currentY, paint)
+
+            } while (cursorverpdf.moveToNext())
+        }
+
+        cursorverpdf.close()
+        pdfDocument.finishPage(page)
+        val fileName = nombreCarrera.replace(" ", "_") + ".pdf"
+
+        val resolver = requireContext().contentResolver
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Downloads.DISPLAY_NAME, fileName)
+            put(MediaStore.Downloads.MIME_TYPE, "application/pdf")
+            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS)
+        }
+
+        val uri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
+        } else {
+            TODO("VERSION.SDK_INT < Q")
+        }
+
+        uri?.let {
+            resolver.openOutputStream(it)?.use { output ->
+                pdfDocument.writeTo(output)
+                Toast.makeText(requireContext(), "PDF guardado en Descargas", Toast.LENGTH_LONG).show()
+            }
+        } ?: run {
+            Toast.makeText(requireContext(), "No se pudo guardar el archivo PDF", Toast.LENGTH_SHORT).show()
+        }
+
+        pdfDocument.close()
+    }
+
 }
