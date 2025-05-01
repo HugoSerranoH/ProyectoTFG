@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import android.Manifest
+import android.widget.TextView
 
 class VerResultados : Fragment() {
     private lateinit var listViewVerResultados: ListView
@@ -35,6 +36,8 @@ class VerResultados : Fragment() {
     private lateinit var buttonpdf: Button
     private var idCarrera: Int = -1
     private var listaResultados = mutableListOf<String>()
+    private lateinit var textviewequipo : TextView
+    private lateinit var textviewdorsal : TextView
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -44,6 +47,8 @@ class VerResultados : Fragment() {
         buttonvolver = view.findViewById(R.id.buttonvolvercarreras)
         buttoncsv = view.findViewById(R.id.buttonexportaracsv)
         buttonpdf = view.findViewById(R.id.buttonexportarapdf)
+        textviewequipo = view.findViewById(R.id.textViewVerEquipo)
+        textviewdorsal = view.findViewById(R.id.textViewVerDorsal)
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
 
 
@@ -93,8 +98,29 @@ class VerResultados : Fragment() {
             return view
         }
 
-
         cargarResultados()
+
+        val db = dbHelper.readableDatabase
+        val cursornombreDeporte2 = db.rawQuery(
+            "SELECT d.nombre_deporte FROM deportes d INNER JOIN carreras c ON d.id = c.id_deporte WHERE c.id = ?",
+            arrayOf(idCarrera.toString())
+        )
+
+        if (cursornombreDeporte2.moveToFirst()) {
+            val nombreDeporte = cursornombreDeporte2.getString(0)
+            cursornombreDeporte2.close()
+
+            when {
+                nombreDeporte.equals("Karts", ignoreCase = true) -> {
+                    textviewequipo.text = "Escudería"
+                    textviewdorsal.text = "Número"
+                }
+                else -> {
+                    textviewequipo.text = "Equipo"
+                    textviewdorsal.text = "Dorsal"
+                }
+            }
+        }
 
         return view
     }

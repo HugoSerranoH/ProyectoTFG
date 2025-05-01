@@ -75,7 +75,7 @@ class BaseDatosEjemplo(
             """CREATE TABLE IF NOT EXISTS resultados_carrera (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 id_participante_carrera INTEGER NOT NULL,
-                tiempo TIME NOT NULL,
+                tiempo VARCHAR(30) NOT NULL,
                 posicion INTEGER NOT NULL,
                 FOREIGN KEY (id_participante_carrera) REFERENCES participante_carrera(id) ON DELETE CASCADE
             )"""

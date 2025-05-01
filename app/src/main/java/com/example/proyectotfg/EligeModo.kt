@@ -26,6 +26,7 @@ class EligeModo : AppCompatActivity() {
     private lateinit var deportesIdList: MutableList<Int>
     private lateinit var fragmentContainer: FragmentContainerView
     private lateinit var imageviewconstruccion: ImageView
+    private lateinit var textViewArriba: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +42,7 @@ class EligeModo : AppCompatActivity() {
         userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
         fragmentContainer = findViewById(R.id.fragmentAccion)
         imageviewconstruccion = findViewById(R.id.imageViewconstruccion)
+        textViewArriba = findViewById(R.id.textViewDeporte_usuario)
 
         dbHelper = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
         val db = dbHelper.readableDatabase
@@ -86,15 +88,17 @@ class EligeModo : AppCompatActivity() {
         spinnerDeportes.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: android.view.View?, position: Int, id: Long) {
 //                val fondoconstraint = findViewById<View>(R.id.main)
+                val nombreUsuario = intent.getStringExtra("nombre_usuario")
                 if (deportesIdList[position] != -1) {
                     Log.i("DEBUG", "Spinner seleccionado: ${deportesList[position]} (ID: ${deportesIdList[position]})")
                     userViewModel.setDeporteSeleccionado(deportesIdList[position], deportesList[position])
 //                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.white,theme))
                 } else {
-                    Log.i("DEBUG", "Usuario no ha seleccionado ningún deporte todavía.")
+//                    Log.i("DEBUG", "Usuario no ha seleccionado ningún deporte todavía.")
 //                    fondoconstraint.setBackgroundColor(resources.getColor(R.color.light_light_blue,theme))
                     fragmentContainer.visibility = View.GONE
                     imageviewconstruccion.visibility = View.GONE
+                    textViewArriba.text = "Elige el deporte, $nombreUsuario"
                 }
             }
 
@@ -134,18 +138,26 @@ class EligeModo : AppCompatActivity() {
         // Observer
         userViewModel.deporteSeleccionado.observe(this) { deporte ->
             deporte?.let { (_, nombreDeporte) ->
-                Log.i("DEBUG", "Cambiando Fragment a SeleccionAccion con deporte: $nombreDeporte")
+                val nombreUsuario = intent.getStringExtra("nombre_usuario")
+
+                textViewArriba.text = "Elige el deporte, $nombreUsuario"
+//                Log.i("DEBUG", "Cambiando Fragment a SeleccionAccion con deporte: $nombreDeporte")
+                if (deporte.second == "Selecciona un deporte") {
+                    textViewArriba.text = "Elige el deporte, $nombreUsuario"
+                }
                 if (nombreDeporte.equals("Fútbol", ignoreCase = true) || nombreDeporte.equals("futbol", ignoreCase = true)) {
                     fragmentContainer.visibility = View.GONE
                     imageviewconstruccion.visibility = View.VISIBLE
-
+                    textViewArriba.text = "Fútbol (Próximamente)"
                 } else {
                     fragmentContainer.visibility = View.VISIBLE
                     imageviewconstruccion.visibility = View.GONE
+                    textViewArriba.text = "$nombreDeporte"
                     Log.i("DEBUG", "Deporte seleccionado no es Fútbol. Mostrando fragment y ocultando ImageView.")
                 }
                 val fragment = supportFragmentManager.findFragmentById(R.id.fragmentAccion) as? SeleccionAccionFragment
                 fragment?.actualizarDeporte(nombreDeporte)
+
 //                fragment.visibility = View.VISIBLE
             }
         }
@@ -168,8 +180,12 @@ class EligeModo : AppCompatActivity() {
         // Mostrar el nombre del usuario en el TextView
         val nombreUsuario = intent.getStringExtra("nombre_usuario")
         nombreUsuario?.let { userViewModel.setUsuario(it) }
-
-        val textViewArriba = findViewById<TextView>(R.id.textViewDeporte_usuario)
         textViewArriba.text = "Elige el deporte, $nombreUsuario"
+    }
+    override fun onResume() {
+        super.onResume()
+        userViewModel.deporteSeleccionado.value?.let { (_, nombreDeporte) ->
+            textViewArriba.text = "$nombreDeporte"
+        }
     }
 }

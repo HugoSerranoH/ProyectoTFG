@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 
@@ -15,12 +16,15 @@ class AnadirParticipante : Fragment() {
     private lateinit var buttonBorrarparticipante: Button
     private lateinit var dbHelper: BaseDatosEjemplo
     private var idCarrera: Int = -1
-
+    private lateinit var textanadir : TextView
+    private lateinit var textparticipantes : TextView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.fragment_anadir_participante, container, false)
 
         buttonAnadir = view.findViewById(R.id.buttonanadirparticipante)
         buttonBorrarparticipante = view.findViewById(R.id.buttonborrarparticipante)
+        textanadir = view.findViewById(R.id.textViewArribaParticipantes)
+        textparticipantes = view.findViewById(R.id.textViewParticipantesanadidos)
 
 
         dbHelper = BaseDatosEjemplo(requireContext(), "ProyectoTFG", null, 1)
@@ -63,6 +67,37 @@ class AnadirParticipante : Fragment() {
                 }
             } else {
                 Toast.makeText(requireContext(), "Error al acceder a la lista de participantes", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        val db = dbHelper.readableDatabase
+        val cursornombreDeporte = db.rawQuery(
+            "SELECT d.nombre_deporte FROM deportes d INNER JOIN carreras c ON d.id = c.id_deporte WHERE c.id = ?",
+            arrayOf(idCarrera.toString())
+        )
+
+        if (cursornombreDeporte.moveToFirst()) {
+            val nombreDeporte = cursornombreDeporte.getString(0)
+            cursornombreDeporte.close()
+
+            when {
+                nombreDeporte.equals("Ciclismo", ignoreCase = true) -> {
+                    textanadir.text = "Añadir ciclista a carrera"
+                    textparticipantes.text = "Ciclistas añadidos"
+                }
+                nombreDeporte.equals("Atletismo", ignoreCase = true) -> {
+                    textanadir.text = "Añadir atleta a carrera"
+                    textparticipantes.text = "Atletas añadidos"
+                }
+                nombreDeporte.equals("Karts", ignoreCase = true) -> {
+                    textanadir.text = "Añadir piloto a carrera"
+                    textparticipantes.text = "Pilotos añadidos"
+                }
+                else -> {
+                    textanadir.text = "Añadir participante a carrera"
+                    textparticipantes.text = "Participantes añadidos"
+                }
             }
         }
 
