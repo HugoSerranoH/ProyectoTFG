@@ -135,6 +135,13 @@ class EligeModo : AppCompatActivity() {
             .replace(R.id.fragmentAccion, SeleccionAccionFragment())
             .commit()
 
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount > 0) {
+                spinnerDeportes.visibility = View.GONE
+            } else {
+                spinnerDeportes.visibility = View.VISIBLE
+            }
+        }
         // Observer
         userViewModel.deporteSeleccionado.observe(this) { deporte ->
             deporte?.let { (_, nombreDeporte) ->

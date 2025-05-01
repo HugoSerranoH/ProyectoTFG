@@ -7,34 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".SeleccionAccionFragment">
 
-    <EditText
-        android:id="@+id/editTextTextLocalidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="Pon la localidad"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextNombreCarrera"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextNombreCarrera" />
 
-    <TextView
-        android:id="@+id/textViewLocalidad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="48dp"
-        android:text="Localidad"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textViewCreacionCarrera"
         android:layout_width="326dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
+        android:textSize="18sp"
         android:gravity="center"
-        android:text="Creacion Carrera"
+        android:text="Creación Carrera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,6 +45,28 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCreacionCarrera" />
+
+
+    <EditText
+        android:id="@+id/editTextTextLocalidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Pon la localidad"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="@+id/editTextTextNombreCarrera"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextNombreCarrera" />
+
+    <TextView
+        android:id="@+id/textViewLocalidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="48dp"
+        android:text="Localidad"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/buttonGuardarCarrera"
