@@ -26,7 +26,7 @@ class UserViewModel : ViewModel() {
     val deporteSeleccionado: LiveData<Pair<Int, String>?> get() = _deporteSeleccionado
 
     fun setDeporteSeleccionado(idDeporte: Int, nombreDeporte: String) {
-        Log.i("DEBUG", "UserViewModel: Guardando ID Deporte -> $idDeporte, Nombre -> $nombreDeporte")
+        //Log.i("DEBUG", "UserViewModel: Guardando ID Deporte -> $idDeporte, Nombre -> $nombreDeporte")
         _deporteSeleccionado.postValue(Pair(idDeporte, nombreDeporte))
     }
 
@@ -38,7 +38,7 @@ class UserViewModel : ViewModel() {
     val carreraSeleccionada: LiveData<Pair<Int, String>> = _carreraSeleccionada
 
     fun setCarreraSeleccionada(idCarrera: Int, nombreCarrera: String) {
-        Log.i("DEBUG", "UserViewModel: Guardando ID carrera -> $idCarrera, Nombre -> $nombreCarrera")
+        //Log.i("DEBUG", "UserViewModel: Guardando ID carrera -> $idCarrera, Nombre -> $nombreCarrera")
         _carreraSeleccionada.postValue(Pair(idCarrera, nombreCarrera))
     }
 

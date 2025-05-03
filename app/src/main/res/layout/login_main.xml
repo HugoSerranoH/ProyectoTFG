@@ -111,6 +111,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ContraseñaeditTextText2"
-        app:srcCompat="@drawable/logotfg" />
+        app:srcCompat="@drawable/logotfg2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

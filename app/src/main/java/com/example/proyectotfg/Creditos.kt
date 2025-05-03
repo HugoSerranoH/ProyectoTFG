@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 class Creditos : AppCompatActivity() {
     private lateinit var botongithub : ImageView
     private lateinit var botonlinkedin : ImageView
+    private lateinit var botoncifp : ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,6 +25,7 @@ class Creditos : AppCompatActivity() {
         }
         botongithub = findViewById(R.id.imageViewgithubicon)
         botonlinkedin = findViewById(R.id.imageViewlinkedinicon)
+        botoncifp = findViewById(R.id.imageViewlogocifp)
 
         botongithub.setOnClickListener {
             val githubUrl = "https://github.com/HugoSerranoH/ProyectoTFG"
@@ -33,6 +35,12 @@ class Creditos : AppCompatActivity() {
 
         botonlinkedin.setOnClickListener {
             val linkedinUrl = "https://www.linkedin.com/in/hugo-serrano-hernández-baaa512a6"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl))
+            startActivity(intent)
+        }
+
+        botoncifp.setOnClickListener {
+            val linkedinUrl = "http://cifpjuandeherrera.centros.educa.jcyl.es/sitio/"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl))
             startActivity(intent)
         }

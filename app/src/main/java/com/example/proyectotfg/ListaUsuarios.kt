@@ -41,7 +41,7 @@ class ListaUsuarios : Fragment() {
         userViewModel.deporteSeleccionado.observe(viewLifecycleOwner) { deporte ->
             deporte?.let { (id, nombre) ->
                 idDeporte = id
-                Log.i("DEBUG", "ListaUsuarios: Obtenido ID de deporte -> $id, Nombre -> $nombre")
+                //Log.i("DEBUG", "ListaUsuarios: Obtenido ID de deporte -> $id, Nombre -> $nombre")
                 cargarUsuarios()
             }
         }
@@ -96,7 +96,7 @@ class ListaUsuarios : Fragment() {
             listaUsuariosFiltrados.addAll(listaUsuarios)
         } else {
             listaUsuariosFiltrados.addAll(listaUsuarios.filter {
-                it.contains(texto, ignoreCase = true)
+                it.contains(texto,ignoreCase = true)
             })
         }
         adapter.notifyDataSetChanged()

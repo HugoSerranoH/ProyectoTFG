@@ -31,7 +31,7 @@ class Login : AppCompatActivity() {
         // Inicialización de la base de datos
         db = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
         val dbw = db.writableDatabase
-        Log.i("SQL", "Base de datos inicializada correctamente.")
+        //Log.i("SQL", "Base de datos inicializada correctamente.")
 
 
         val cursordeportes = dbw.rawQuery("SELECT COUNT(*) FROM deportes", null)
@@ -91,11 +91,11 @@ class Login : AppCompatActivity() {
 
             if (verificarUsuario(dbw, usuario, contraseña)) {
                 Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                Log.i("SQL", "Usuario y contraseña correctos")
+                //Log.i("SQL", "Usuario y contraseña correctos")
                 loginViewModel.setUsuario(usuario) // Pasar el usuario al ViewModel
             } else {
                 Toast.makeText(this, "Usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show()
-                Log.i("SQL", "Error en inicio de sesión")
+               // Log.i("SQL", "Error en inicio de sesión")
 
                 // Código de prueba comentado (por si lo necesito más adelante)
                 /* val sqlprueba = "INSERT INTO usuarios (nombre_usuario, contraseña, telefono, email, sexo, ultima_sesion) " +

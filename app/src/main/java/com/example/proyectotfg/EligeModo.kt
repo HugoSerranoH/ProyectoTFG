@@ -160,7 +160,7 @@ class EligeModo : AppCompatActivity() {
                     fragmentContainer.visibility = View.VISIBLE
                     imageviewconstruccion.visibility = View.GONE
                     textViewArriba.text = "$nombreDeporte"
-                    Log.i("DEBUG", "Deporte seleccionado no es Fútbol. Mostrando fragment y ocultando ImageView.")
+                    //Log.i("DEBUG", "Deporte seleccionado no es Fútbol. Mostrando fragment y ocultando ImageView.")
                 }
                 val fragment = supportFragmentManager.findFragmentById(R.id.fragmentAccion) as? SeleccionAccionFragment
                 fragment?.actualizarDeporte(nombreDeporte)

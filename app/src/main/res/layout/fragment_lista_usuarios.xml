@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="Busca usuario" />
+        android:hint="Busca deportista" />
 
     <ListView
         android:id="@+id/listViewUsuarios"

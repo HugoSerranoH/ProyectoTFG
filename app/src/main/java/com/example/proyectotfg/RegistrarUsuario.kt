@@ -65,14 +65,14 @@ class RegistrarUsuario : AppCompatActivity() {
             val sqlInsert = "INSERT INTO usuarios (nombre_usuario, contraseña, telefono, email, sexo) VALUES (?, ?, ?, ?, ?)"
             db.execSQL(sqlInsert, arrayOf(nombre, contraseña, telefono, email, sexo))
             Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
-            Log.i("SQL", "Usuario $nombre registrado con éxito")
+            //Log.i("SQL", "Usuario $nombre registrado con éxito")
 
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
             finish()
         } catch (e: Exception) {
             Toast.makeText(this, "Error al registrar el usuario: ${e.message}", Toast.LENGTH_SHORT).show()
-            Log.e("SQL", "Error al registrar el usuario: ${e.message}")
+            //Log.e("SQL", "Error al registrar el usuario: ${e.message}")
         }
     }
 }
