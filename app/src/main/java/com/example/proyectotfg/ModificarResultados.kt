@@ -2,7 +2,9 @@ package com.example.proyectotfg
 
 import android.database.Cursor
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,14 +48,24 @@ class ModificarResultados : Fragment() {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 val row = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false)
 
-                val container = LinearLayout(context)
-                container.orientation = LinearLayout.HORIZONTAL
+                val container = LinearLayout(context).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = AbsListView.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                }
 
-                val textViewPosicion = TextView(context)
-                textViewPosicion.text = "${position + 1}."
+                val textViewPosicion = TextView(context).apply {
+                    text = "${position + 1}."
+                    gravity = Gravity.CENTER
+                    layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.10f)
+                }
                 container.addView(textViewPosicion)
 
-                val spinner = Spinner(context)
+                val spinner = Spinner(context).apply {
+                    layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.55f)
+                }
                 val spinnerAdapter = ArrayAdapter(context, android.R.layout.simple_spinner_dropdown_item, corredoresDisponibles.map { it.second })
                 spinner.adapter = spinnerAdapter
 
@@ -93,9 +105,12 @@ class ModificarResultados : Fragment() {
 
                 container.addView(spinner)
 
-                val editTextTiempo = EditText(context)
-                editTextTiempo.hint = "Tiempo (hh:mm:ss)"
-                editTextTiempo.setSingleLine(true)
+                val editTextTiempo = EditText(context).apply {
+                    hint = "Tiempo (hh:mm:ss)"
+                    setSingleLine(true)
+                    inputType = InputType.TYPE_CLASS_TEXT
+                    layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.35f)
+                }
 
                 editTextTiempo.setText(corredoresTiempos[position] ?: "")
 
@@ -111,7 +126,7 @@ class ModificarResultados : Fragment() {
                             .setPositiveButton("Guardar") { _, _ ->
                                 val tiempoIngresado = editTextInput.text.toString().trim()
 
-                                if (tiempoIngresado.matches(Regex("^(\\d{2}:\\d{2}:\\d{2}|DNF|DNS|DSQ|\\+\\d+ vuelta[s]?|\\+ \\d+ vuelta[s]?)\$", RegexOption.IGNORE_CASE))) {
+                                if (tiempoIngresado.matches(Regex("^(\\d{2}:\\d{2}:\\d{2}|\\+\\s?\\d{1,2}:\\d{2}(\\.\\d{1,3})?|\\+\\s?\\d{1,2}[.,]\\d{1,3}|\\+\\s?\\d+\\s?vuelta[s]?|DNF|DNS|DSQ)$", RegexOption.IGNORE_CASE))) {
                                     corredoresTiempos[position] = tiempoIngresado
                                     editTextTiempo.setText(tiempoIngresado)
                                     Log.i("DEBUG", "Tiempo ingresado para posición $position: $tiempoIngresado")
@@ -119,7 +134,7 @@ class ModificarResultados : Fragment() {
                                 } else {
                                     Toast.makeText(
                                         context,
-                                        "Formato incorrecto. Usa hh:mm:ss, '+ x vueltas' o (DNF, DNS, DSQ)",
+                                        "Formato incorrecto.Usa hh:mm:ss,'+ x vueltas +x,xxx +x.xxx' o (DNF, DNS, DSQ)",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     editTextTiempo.setText(corredoresTiempos[position] ?: "")

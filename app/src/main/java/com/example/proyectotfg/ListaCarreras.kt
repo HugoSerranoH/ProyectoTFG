@@ -1,9 +1,11 @@
 package com.example.proyectotfg
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -60,7 +62,7 @@ class ListaCarreras : Fragment() {
 
 
         val cursorlistacarreras: Cursor = db.rawQuery(
-            "SELECT id, nombre_carrera,localidad FROM carreras WHERE id_deporte = ?",
+            "SELECT id, nombre_carrera,localidad,fecha FROM carreras WHERE id_deporte = ?",
             arrayOf(idDeporte.toString())
         )
 
@@ -71,7 +73,12 @@ class ListaCarreras : Fragment() {
                 val idCarrera = cursorlistacarreras.getInt(0)
                 val nombreCarrera = cursorlistacarreras.getString(1)
                 val localidad = cursorlistacarreras.getString(2)
-                listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad"))
+                val fecha = cursorlistacarreras.getString(3)
+                if (fecha.isNullOrBlank()) {
+                    listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad --- Fecha sin confirmar"))
+                }else {
+                    listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad --- $fecha"))
+                }
 //                Log.i("DEBUG", "Lista_Carreras: Carrera encontrada -> ID: $idCarrera, Nombre: $nombreCarrera, Localidad: $localidad")
             } while (cursorlistacarreras.moveToNext())
         } else {
@@ -116,7 +123,9 @@ class ListaCarreras : Fragment() {
      * @param
      */
     private fun mostrarDialogoSeleccion(idCarrera: Int, nombreCarrera: String) {
-        val localidadActual = listaCarreras.find { it.first == idCarrera }?.second?.split("---")?.last()?.trim() ?: ""
+        val datos = listaCarreras.find { it.first == idCarrera }?.second?.split("---")?.map { it.trim() } ?: listOf()
+        val localidadActual = datos.getOrNull(1) ?: ""
+        val fechaactual = datos.getOrNull(2) ?: ""
         val opciones = arrayOf("Añadir Participante", "Modificar Resultados", "Ver Carrera","Cambiar datos")
 
         AlertDialog.Builder(requireContext())
@@ -126,7 +135,7 @@ class ListaCarreras : Fragment() {
                     0 -> navegarAConsultaCarrera(idCarrera, nombreCarrera, "AnadirParticipante") // Envía el tipo de fragmento
                     1 -> navegarAConsultaCarrera(idCarrera, nombreCarrera, "ModificarResultados")
                     2 -> navegarAConsultaCarrera(idCarrera, nombreCarrera, "VerCarrera")
-                    3 -> mostrarDialogoModificar(idCarrera, Carreranombre, localidadActual)
+                    3 -> mostrarDialogoModificar(idCarrera, Carreranombre, localidadActual ,fechaactual)
                 }
             }
             .setNegativeButton("Cancelar", null)
@@ -151,7 +160,7 @@ class ListaCarreras : Fragment() {
         startActivity(intent)
     }
 
-    private fun mostrarDialogoModificar(idCarrera: Int, nombreCarreraActual: String, localidadActual: String) {
+    private fun mostrarDialogoModificar(idCarrera: Int, nombreCarreraActual: String, localidadActual: String ,fecha : String) {
         val textViewNombre = TextView(requireContext()).apply {
             text = "Nuevo Nombre :"
             textSize = 16f
@@ -170,12 +179,42 @@ class ListaCarreras : Fragment() {
             hint = "Nueva localidad"
             setText(localidadActual)
         }
+
+        val textViewfechanueva = TextView(requireContext()).apply {
+            text = "Nueva Fecha:"
+            textSize = 16f
+            setPadding(0, 6, 0, 6)
+        }
+        val editTextfechanueva = EditText(requireContext()).apply {
+            hint = "Nueva fecha"
+            setText(fecha)
+        }
+        editTextfechanueva.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val ano = calendar.get(Calendar.YEAR)
+            val mes = calendar.get(Calendar.MONTH)
+            val dia = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(requireContext(), { _, anoseleccionado, messeleccionado, diaseleccionado ->
+                val fechaFormateada = String.format("%02d/%02d/%04d", diaseleccionado, messeleccionado + 1, anoseleccionado)
+                editTextfechanueva.setText(fechaFormateada)
+            }, ano, mes, dia)
+
+            datePickerDialog.show()
+        }
+        editTextfechanueva.apply {
+            isFocusable = false
+            isClickable = true
+        }
+
         val layoutdeldialog = LinearLayout(requireContext()).apply {
             orientation = LinearLayout.VERTICAL
             addView(textViewNombre)
             addView(editTextNombre)
             addView(textViewLocalidad)
             addView(editTextLocalidad)
+            addView(textViewfechanueva)
+            addView(editTextfechanueva)
         }
         AlertDialog.Builder(requireContext())
             .setTitle("Cambiar datos de la carrera")
@@ -183,28 +222,30 @@ class ListaCarreras : Fragment() {
             .setPositiveButton("Guardar") { _, _ ->
                 val nuevoNombre = editTextNombre.text.toString().trim()
                 val nuevaLocalidad = editTextLocalidad.text.toString().trim()
-                if (nuevoNombre.isEmpty() || nuevaLocalidad.isEmpty()) {
+                val nuevafecha = editTextfechanueva.text.toString().trim()
+                if (nuevoNombre.isEmpty() || nuevaLocalidad.isEmpty() || nuevafecha.isEmpty()) {
                     Toast.makeText(requireContext(), "Los campos no pueden estar vacíos", Toast.LENGTH_SHORT).show()
                     return@setPositiveButton
                 }
-                actualizarDatos(idCarrera, nuevoNombre, nuevaLocalidad)
+                actualizarDatos(idCarrera, nuevoNombre, nuevaLocalidad,nuevafecha)
             }
             .setNegativeButton("Cancelar", null)
             .show()
     }
 
-    private fun actualizarDatos(idCarrera: Int, nuevoNombre: String, nuevaLocalidad: String) {
+    private fun actualizarDatos(idCarrera: Int, nuevoNombre: String, nuevaLocalidad: String,nuevaFecha: String) {
         val db = dbHelper.writableDatabase
 
-        val actualizardatos = """UPDATE carreras SET nombre_carrera = ?, localidad = ? WHERE id = ?"""
-        db.execSQL(actualizardatos, arrayOf(nuevoNombre, nuevaLocalidad, idCarrera.toString()))
+        val actualizardatos = """UPDATE carreras SET nombre_carrera = ?, localidad = ? , fecha= ? WHERE id = ?"""
+        db.execSQL(actualizardatos, arrayOf(nuevoNombre, nuevaLocalidad,nuevaFecha, idCarrera.toString()))
 
-        val cursoractualizardatos = db.rawQuery("SELECT nombre_carrera, localidad FROM carreras WHERE id = ?", arrayOf(idCarrera.toString()))
+        val cursoractualizardatos = db.rawQuery("SELECT nombre_carrera, localidad ,fecha FROM carreras WHERE id = ?", arrayOf(idCarrera.toString()))
         if (cursoractualizardatos.moveToFirst()) {
             val nombreActualizado = cursoractualizardatos.getString(0)
             val localidadActualizada = cursoractualizardatos.getString(1)
+            val fechaActualizada = cursoractualizardatos.getString(2)
 
-            if (nombreActualizado == nuevoNombre && localidadActualizada == nuevaLocalidad) {
+            if (nombreActualizado == nuevoNombre && localidadActualizada == nuevaLocalidad && fechaActualizada == nuevaFecha) {
                 Toast.makeText(requireContext(), "Datos actualizados correctamente", Toast.LENGTH_SHORT).show()
                 recargarListaCarreras()
             } else {
@@ -221,7 +262,7 @@ class ListaCarreras : Fragment() {
 
         val db = dbHelper.readableDatabase
         val cursorlistacarrerasactualizar = db.rawQuery(
-            "SELECT id, nombre_carrera, localidad FROM carreras WHERE id_deporte = ?",
+            "SELECT id, nombre_carrera, localidad,fecha FROM carreras WHERE id_deporte = ?",
             arrayOf(idDeporte2.toString())
         )
 
@@ -230,7 +271,12 @@ class ListaCarreras : Fragment() {
                 val idCarrera = cursorlistacarrerasactualizar.getInt(0)
                 val nombreCarrera = cursorlistacarrerasactualizar.getString(1)
                 val localidad = cursorlistacarrerasactualizar.getString(2)
-                listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad"))
+                val fecha = cursorlistacarrerasactualizar.getString(3)
+                if (fecha.isNullOrBlank()) {
+                    listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad --- Fecha sin confirmar"))
+                }else {
+                    listaCarreras.add(Pair(idCarrera, "$nombreCarrera --- $localidad --- $fecha"))
+                }
             } while (cursorlistacarrerasactualizar.moveToNext())
         }
 

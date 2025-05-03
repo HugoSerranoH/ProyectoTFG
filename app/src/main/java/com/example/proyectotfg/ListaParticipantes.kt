@@ -74,7 +74,7 @@ class ListaParticipantes : Fragment() {
 
         if (cursorparticipantes.moveToFirst()) {
             do {
-                listaParticipantes.add("${cursorparticipantes.getString(0)},  NºD: ${cursorparticipantes.getInt(1)}")
+                listaParticipantes.add("${cursorparticipantes.getString(0)},  Nº: ${cursorparticipantes.getInt(1)}")
             } while (cursorparticipantes.moveToNext())
         }
         cursorparticipantes.close()

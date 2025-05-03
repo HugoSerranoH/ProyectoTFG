@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -67,6 +68,7 @@ class Login : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.button)
         val registrateTextView = findViewById<TextView>(R.id.textViewRegistrate)
         val informacionTextView = findViewById<TextView>(R.id.textViewCreditos)
+        val descargardatos = findViewById<ImageButton>(R.id.imageButtonDescargarDatos)
 
 
         registrateTextView.setOnClickListener {
@@ -123,5 +125,107 @@ class Login : AppCompatActivity() {
         return existeUsuario
     }
 
+    private fun anadirciclistas() {
+        val dbw = db.writableDatabase
+
+        // Insertar la carrera París-Roubaix 2025
+        dbw.execSQL(
+            """INSERT INTO carreras (nombre_carrera, id_deporte, localidad, fecha)
+           VALUES ('París-Roubaix 2025', 1, 'Roubaix', '2025-04-13')"""
+        )
+
+        // Obtener el ID de la carrera recién insertada
+        val carreraCursor = dbw.rawQuery(
+            "SELECT id FROM carreras WHERE nombre_carrera = ?",
+            arrayOf("París-Roubaix 2025")
+        )
+        var idCarrera = -1
+        if (carreraCursor.moveToFirst()) {
+            idCarrera = carreraCursor.getInt(0)
+        }
+        carreraCursor.close()
+
+
+        val corredores = listOf(
+            Triple("Mathieu van der Poel", "Alpecin - Deceuninck", 30),
+            Triple("Tadej Pogačar", "UAE Team Emirates", 26),
+            Triple("Mads Pedersen", "Lidl - Trek", 29),
+            Triple("Wout van Aert", "Team Visma | Lease a Bike", 30),
+            Triple("Florian Vermeersch", "UAE Team Emirates", 26),
+            Triple("Jonas Rutsch", "Intermarché - Wanty", 26),
+            Triple("Stefan Bissegger", "Decathlon AG2R La Mondiale Team", 26),
+            Triple("Markus Hoelgaard", "Uno-X Mobility", 30),
+            Triple("Fred Wright", "Bahrain - Victorious", 25),
+            Triple("Laurenz Rex", "Intermarché - Wanty", 24)
+            // Agrega los corredores restantes hasta completar los 70
+        )
+
+
+        val dorsales = listOf(1, 21, 11, 36, 26, 45, 52, 61, 72, 81)
+
+
+        // Lista de tiempos en formato HH:MM:SS
+        val tiempos = listOf(
+            "05:31:27",
+            "05:32:45",
+            "05:33:38",
+            "05:33:38",
+            "05:35:13",
+            "05:35:13",
+            "05:35:13",
+            "05:35:13",
+            "05:36:02",
+            "05:36:03"
+
+        )
+
+        for (i in corredores.indices) {
+            val (nombre, equipo, edad) = corredores[i]
+            val dorsal = dorsales[i]
+            val tiempo = tiempos[i]
+
+            // Insertar corredor
+            dbw.execSQL(
+                "INSERT INTO corredores (nombre, equipo, edad, genero, id_deporte) VALUES (?, ?, ?, ?, ?)",
+                arrayOf(nombre, equipo, edad, "Masculino", 1)
+            )
+
+            // Obtener el ID del corredor recién insertado
+            val corredorCursor = dbw.rawQuery(
+                "SELECT id FROM corredores WHERE nombre = ? AND equipo = ?",
+                arrayOf(nombre, equipo)
+            )
+            var idCorredor = -1
+            if (corredorCursor.moveToFirst()) {
+                idCorredor = corredorCursor.getInt(0)
+            }
+            corredorCursor.close()
+
+            // Insertar participante en la carrera
+            dbw.execSQL(
+                "INSERT INTO participante_carrera (id_participante, id_carrera, dorsal) VALUES (?, ?, ?)",
+                arrayOf(idCorredor, idCarrera, dorsal)
+            )
+
+            // Obtener el ID del participante_carrera recién insertado
+            val participanteCursor = dbw.rawQuery(
+                "SELECT id FROM participante_carrera WHERE id_participante = ? AND id_carrera = ?",
+                arrayOf(idCorredor.toString(), idCarrera.toString())
+            )
+            var idParticipanteCarrera = -1
+            if (participanteCursor.moveToFirst()) {
+                idParticipanteCarrera = participanteCursor.getInt(0)
+            }
+            participanteCursor.close()
+
+            // Insertar resultado de la carrera
+            dbw.execSQL(
+                "INSERT INTO resultados_carrera (id_participante_carrera, tiempo, posicion) VALUES (?, ?, ?)",
+                arrayOf(idParticipanteCarrera, tiempo, i + 1)
+            )
+        }
+
+        Toast.makeText(this, "Datos de París-Roubaix 2025 cargados correctamente", Toast.LENGTH_LONG).show()
+    }
 
 }

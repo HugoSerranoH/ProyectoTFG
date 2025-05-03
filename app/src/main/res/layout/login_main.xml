@@ -113,4 +113,16 @@
         app:layout_constraintTop_toBottomOf="@+id/ContraseñaeditTextText2"
         app:srcCompat="@drawable/logotfg2" />
 
+    <ImageButton
+        android:id="@+id/imageButtonDescargarDatos"
+        android:layout_width="30dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textViewCreditos"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/download_icon" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

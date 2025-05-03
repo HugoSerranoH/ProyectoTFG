@@ -265,6 +265,9 @@ class VerResultados : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     private fun guardarPDF() {
         val db = dbHelper.readableDatabase
@@ -308,7 +311,7 @@ class VerResultados : Fragment() {
         val pdfDocument = PdfDocument()
         val paint = Paint()
         val titlePaint = Paint()
-        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+        val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
         val page = pdfDocument.startPage(pageInfo)
         var canvas = page.canvas
         titlePaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
@@ -330,7 +333,8 @@ class VerResultados : Fragment() {
         if (iconoResId != null) {
             val bitmap = BitmapFactory.decodeResource(resources, iconoResId)
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap, 40, 40, false)
-            canvas.drawBitmap(scaledBitmap, (pageInfo.pageWidth - 60).toFloat(), 30f, null)
+            canvas.drawBitmap(scaledBitmap, (pageInfo.pageWidth * 0.950f - 40), 30f, null)
+            canvas.drawBitmap(scaledBitmap, (pageInfo.pageWidth * 0.05f), 30f, null)
         }
         val startX = 40f
         var currentY = 90f
