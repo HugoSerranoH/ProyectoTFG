@@ -312,7 +312,7 @@ class VerResultados : Fragment() {
         val paint = Paint()
         val titlePaint = Paint()
         val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create()
-        val page = pdfDocument.startPage(pageInfo)
+        var page = pdfDocument.startPage(pageInfo)
         var canvas = page.canvas
         titlePaint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
         titlePaint.textSize = 20f
@@ -343,8 +343,8 @@ class VerResultados : Fragment() {
         canvas.drawText("Pos", startX, currentY, paint)
         canvas.drawText("Nombre", startX + 40, currentY, paint)
         canvas.drawText(encabezadoEquipo, startX + 180, currentY, paint)
-        canvas.drawText(encabezadoDorsal, startX + 320, currentY, paint)
-        canvas.drawText("Tiempo", startX + 400, currentY, paint)
+        canvas.drawText(encabezadoDorsal, startX + 370, currentY, paint)
+        canvas.drawText("Tiempo", startX + 440, currentY, paint)
         paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.NORMAL)
 
 
@@ -364,6 +364,7 @@ class VerResultados : Fragment() {
                     pdfDocument.finishPage(page)
                     val newPageInfo = PdfDocument.PageInfo.Builder(595, 842, pdfDocument.pages.size + 1).create()
                     val newPage = pdfDocument.startPage(newPageInfo)
+                    page = newPage
                     canvas = newPage.canvas
                     currentY = 90f
                 }
@@ -377,8 +378,8 @@ class VerResultados : Fragment() {
                 canvas.drawText(posicion, startX, currentY, paint)
                 canvas.drawText(nombre, startX + 40, currentY, paint)
                 canvas.drawText(equipo, startX + 180, currentY, paint)
-                canvas.drawText(dorsal, startX + 320, currentY, paint)
-                canvas.drawText(tiempo, startX + 400, currentY, paint)
+                canvas.drawText(dorsal, startX + 370, currentY, paint)
+                canvas.drawText(tiempo, startX + 440, currentY, paint)
 
             } while (cursorverpdf.moveToNext())
         }

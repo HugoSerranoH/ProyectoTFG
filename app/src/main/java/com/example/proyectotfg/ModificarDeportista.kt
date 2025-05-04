@@ -86,7 +86,22 @@ class ModificarDeportista : Fragment() {
 
     private fun editarCampo(campo: String) {
         val input = EditText(requireContext())
-        input.hint = "Introduce nuevo $campo"
+        val idUsuario = usuarioSeleccionadoId
+
+        if (idUsuario == null) {
+            Toast.makeText(requireContext(), "Error: ID del usuario no encontrado", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val db = dbHelper.readableDatabase
+        val cursor = db.rawQuery("SELECT $campo FROM corredores WHERE id = ?", arrayOf(idUsuario.toString()))
+        var valorActual = ""
+        if (cursor.moveToFirst()) {
+            valorActual = cursor.getString(0)
+        }
+        cursor.close()
+
+        input.setText(valorActual)
 
         AlertDialog.Builder(requireContext())
             .setTitle("Editar $campo del deportista")
