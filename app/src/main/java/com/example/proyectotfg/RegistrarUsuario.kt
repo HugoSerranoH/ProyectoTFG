@@ -53,17 +53,35 @@ class RegistrarUsuario : AppCompatActivity() {
             val sexo = sexoSpinner.selectedItem.toString()
 
             if (nombre.isNotEmpty() && pass.isNotEmpty() && telefonoText.isNotEmpty() && emailText.isNotEmpty() && sexo.isNotEmpty()) {
-                insertarUsuario(nombre, pass, telefonoText, emailText, sexo)
+                if (!emailValido(emailText)) {
+                    Toast.makeText(this, "Email no válido", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                if (!contrasenasegura(pass)) {
+                    Toast.makeText(this, "La contraseña debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y un número", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
+                if (!telefonoText.all { it.isDigit() }) {
+                    Toast.makeText(this, "El teléfono solo debe contener números", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+
+                val hashedPassword = hashcontrasena(pass)
+                insertarUsuario(nombre, hashedPassword, telefonoText, emailText, sexo)
             } else {
                 Toast.makeText(this, "Por favor, rellena todos los campos obligatorios", Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
-    private fun insertarUsuario(nombre: String, contraseña: String, telefono: String, email: String, sexo: String) {
+    private fun insertarUsuario(nombre: String, contrasena: String, telefono: String, email: String, sexo: String) {
         try {
             val sqlInsert = "INSERT INTO usuarios (nombre_usuario, contraseña, telefono, email, sexo) VALUES (?, ?, ?, ?, ?)"
-            db.execSQL(sqlInsert, arrayOf(nombre, contraseña, telefono, email, sexo))
+            db.execSQL(sqlInsert, arrayOf(nombre, contrasena, telefono, email, sexo))
             Toast.makeText(this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show()
             //Log.i("SQL", "Usuario $nombre registrado con éxito")
 
@@ -75,4 +93,21 @@ class RegistrarUsuario : AppCompatActivity() {
             //Log.e("SQL", "Error al registrar el usuario: ${e.message}")
         }
     }
+
+    private fun emailValido(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun contrasenasegura(password: String): Boolean {
+        val contrasenaregex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}\$")
+        return password.matches(contrasenaregex)
+    }
+
+    private fun hashcontrasena(contrasena: String): String {
+        val bytes = contrasena.toByteArray()
+        val md = java.security.MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.joinToString("") { "%02x".format(it) }
+    }
+
 }

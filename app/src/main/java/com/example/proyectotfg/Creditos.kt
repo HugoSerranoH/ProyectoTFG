@@ -18,6 +18,7 @@ class Creditos : AppCompatActivity() {
     private lateinit var botonlinkedin : ImageView
     private lateinit var botoncifp : ImageView
     private lateinit var botondescargardatos : ImageButton
+    private lateinit var botonborrardatos : ImageButton
     private lateinit var db: BaseDatosEjemplo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +33,7 @@ class Creditos : AppCompatActivity() {
         botonlinkedin = findViewById(R.id.imageViewlinkedinicon)
         botoncifp = findViewById(R.id.imageViewlogocifp)
         botondescargardatos = findViewById(R.id.imageButtonDescargarDatos)
+        botonborrardatos = findViewById(R.id.imageButtonBorrarDatos)
         db = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
 
 
@@ -51,6 +53,17 @@ class Creditos : AppCompatActivity() {
             val linkedinUrl = "http://cifpjuandeherrera.centros.educa.jcyl.es/sitio/"
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(linkedinUrl))
             startActivity(intent)
+        }
+        botonborrardatos.setOnClickListener {
+            val dbw = db.writableDatabase
+            dbw.execSQL("DELETE FROM usuarios")
+            dbw.execSQL("DELETE FROM deportes")
+            dbw.execSQL("DELETE FROM corredores")
+            dbw.execSQL("DELETE FROM carreras")
+            dbw.execSQL("DELETE FROM resultados_carrera")
+            dbw.execSQL("DELETE FROM participante_carrera")
+
+            Toast.makeText(this, "Se han eliminado todos los datos de la APP", Toast.LENGTH_LONG).show()
         }
 
         botondescargardatos.setOnClickListener {
@@ -333,17 +346,17 @@ class Creditos : AppCompatActivity() {
         Toast.makeText(this, "Se han insertado los 60 primeros corredores de París-Roubaix 2025 y 20 clásicas del calendario 2025", Toast.LENGTH_LONG).show()
     }
 
-    private fun borrarCorredores(context: Context, inicio: Int = 99000, fin: Int = 99059): Int {
-        val dbw = db.writableDatabase
-        val filasBorradas = dbw.delete("corredores", "id BETWEEN ? AND ?", arrayOf(inicio.toString(), fin.toString()))
-
-
-        if (filasBorradas > 0) {
-            Toast.makeText(context, "Se han borrado $filasBorradas corredores de París-Roubaix 2025", Toast.LENGTH_LONG).show()
-        } else {
-            Toast.makeText(context, "No se ha borrado ningún corredor en el rango especificado", Toast.LENGTH_SHORT).show()
-        }
-
-        return filasBorradas
-    }
+//    private fun borrarCorredores(context: Context, inicio: Int = 99000, fin: Int = 99059): Int {
+//        val dbw = db.writableDatabase
+//        val filasBorradas = dbw.delete("corredores", "id BETWEEN ? AND ?", arrayOf(inicio.toString(), fin.toString()))
+//
+//
+//        if (filasBorradas > 0) {
+//            Toast.makeText(context, "Se han borrado $filasBorradas corredores de París-Roubaix 2025", Toast.LENGTH_LONG).show()
+//        } else {
+//            Toast.makeText(context, "No se ha borrado ningún corredor en el rango especificado", Toast.LENGTH_SHORT).show()
+//        }
+//
+//        return filasBorradas
+//    }
 }

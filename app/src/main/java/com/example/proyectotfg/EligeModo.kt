@@ -1,5 +1,6 @@
 package com.example.proyectotfg
 
+import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
@@ -27,6 +28,7 @@ class EligeModo : AppCompatActivity() {
     private lateinit var fragmentContainer: FragmentContainerView
     private lateinit var imageviewconstruccion: ImageView
     private lateinit var textViewArriba: TextView
+    private lateinit var logoutBoton : ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +45,7 @@ class EligeModo : AppCompatActivity() {
         fragmentContainer = findViewById(R.id.fragmentAccion)
         imageviewconstruccion = findViewById(R.id.imageViewconstruccion)
         textViewArriba = findViewById(R.id.textViewDeporte_usuario)
+        logoutBoton = findViewById(R.id.logoutButton)
 
         dbHelper = BaseDatosEjemplo(this, "ProyectoTFG", null, 1)
         val db = dbHelper.readableDatabase
@@ -168,7 +171,11 @@ class EligeModo : AppCompatActivity() {
 //                fragment.visibility = View.VISIBLE
             }
         }
-
+        logoutBoton.setOnClickListener {
+            val intent = Intent(this, Login::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
         /*
         // Antiguo Observer
         userViewModel.deporteSeleccionado.observe(this) { deporte ->

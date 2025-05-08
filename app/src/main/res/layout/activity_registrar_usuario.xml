@@ -71,7 +71,8 @@
         android:text="Telefono *"
         app:layout_constraintStart_toStartOf="@+id/editTextRegistroContrasena"
         app:layout_constraintTop_toBottomOf="@+id/editTextRegistroContrasena"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:inputType="number"/>
 
     <EditText
         android:id="@+id/editTextRegistroTelefono"

@@ -102,14 +102,49 @@
         android:id="@+id/imageButtonDescargarDatos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/download_icon" />
+
+    <TextView
+        android:id="@+id/textViewDescargarDatos"
+        android:layout_width="108dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="4dp"
+        android:gravity="left"
+        android:text="Descargar Datos"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonDescargarDatos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVersion" />
+
+
+    <ImageButton
+        android:id="@+id/imageButtonBorrarDatos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/delete_icon" />
+
+    <TextView
+        android:id="@+id/textViewBorrarDatos"
+        android:layout_width="108dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="right"
+        android:text="Borrar datos"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonBorrarDatos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewVersion"
-        app:srcCompat="@drawable/download_icon"
-        android:backgroundTint="@color/white"/>
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

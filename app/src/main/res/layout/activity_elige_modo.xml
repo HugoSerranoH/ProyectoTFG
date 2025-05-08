@@ -8,17 +8,40 @@
     tools:context=".EligeModo">
 
 
-    <TextView
-        android:id="@+id/textViewDeporte_usuario"
-        android:layout_width="418dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filaarriba"
+        android:layout_width="0dp"
         android:layout_height="83dp"
-        android:gravity="center"
-        android:text="Elige el deporte , nombre_usuario "
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textViewDeporte_usuario"
+            android:layout_width="0dp"
+            android:layout_height="83dp"
+            android:text="Elige el deporte, nombre_usuario"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/logoutButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+        <ImageButton
+            android:id="@+id/logoutButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/logout_icon"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Spinner
         android:id="@+id/spinner2"
@@ -26,7 +49,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDeporte_usuario" />
+        app:layout_constraintTop_toBottomOf="@+id/filaarriba" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentAccion"

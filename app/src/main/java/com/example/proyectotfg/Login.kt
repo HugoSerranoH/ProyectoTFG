@@ -113,21 +113,23 @@ class Login : AppCompatActivity() {
         }
     }
 
-    private fun verificarUsuario(
-        dbw: SQLiteDatabase,
-        usuario: String,
-        contraseña: String
-    ): Boolean {
+    private fun verificarUsuario(dbw: SQLiteDatabase, usuario: String, contraseña: String): Boolean {
         val query = "SELECT COUNT(*) FROM usuarios WHERE nombre_usuario = ? AND contraseña = ?"
-        val cursorLogin = dbw.rawQuery(query, arrayOf(usuario, contraseña))
-
-
+        val contraseñahash = hashcontraseña(contraseña)
+        val cursorLogin = dbw.rawQuery(query, arrayOf(usuario, contraseñahash))
         var existeUsuario = false
         if (cursorLogin.moveToFirst()) {
             existeUsuario = cursorLogin.getInt(0) > 0
         }
         cursorLogin.close()
         return existeUsuario
+    }
+
+    private fun hashcontraseña(contraseña: String): String {
+        val bytes = contraseña.toByteArray()
+        val md = java.security.MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.joinToString("") { "%02x".format(it) }
     }
 
 
