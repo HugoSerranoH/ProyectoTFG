@@ -106,7 +106,7 @@ class ModificarResultados : Fragment() {
                 container.addView(spinner)
 
                 val editTextTiempo = EditText(context).apply {
-                    hint = "Tiempo (hh:mm:ss)"
+                    hint = "Tiempo"
                     setSingleLine(true)
                     inputType = InputType.TYPE_CLASS_TEXT
                     layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 0.35f)

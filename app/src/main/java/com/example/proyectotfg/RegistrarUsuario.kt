@@ -98,9 +98,9 @@ class RegistrarUsuario : AppCompatActivity() {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    private fun contrasenasegura(password: String): Boolean {
+    private fun contrasenasegura(contrasena: String): Boolean {
         val contrasenaregex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}\$")
-        return password.matches(contrasenaregex)
+        return contrasena.matches(contrasenaregex)
     }
 
     private fun hashcontrasena(contrasena: String): String {
